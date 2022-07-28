@@ -29,8 +29,8 @@ export default {
             try {
                 const index = this.client.initIndex(collection.config.index);
                 const data = await index.search(collection.config.search, {
-                    page: collection.config.page || 0,
-                    hitsPerPage: collection.config.limit || 20,
+                    offset: collection.offset || 0,
+                    hitsPerPage: collection.limit || 20,
                 });
                 return { data };
             } catch (err) {

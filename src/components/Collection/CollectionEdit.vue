@@ -22,28 +22,6 @@
         :model-value="database.search"
         @update:modelValue="setProp('search', $event)"
     />
-    <div class="flex items-center">
-        <div class="w-100">
-            <wwEditorInputRow
-                label="Page"
-                type="number"
-                placeholder="Default: 0"
-                bindable
-                :model-value="database.page"
-                @update:modelValue="setProp('page', $event)"
-            />
-        </div>
-        <div class="m-2"></div>
-        <div class="w-100">
-            <wwEditorInputRow
-                label="Limit"
-                type="number"
-                placeholder="Default: 20"
-                :model-value="database.limit"
-                @update:modelValue="setProp('limit', $event)"
-            />
-        </div>
-    </div>
     <wwLoader :loading="isLoading" />
 </template>
 
