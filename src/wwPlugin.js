@@ -28,11 +28,11 @@ export default {
         if (collection.mode === 'dynamic') {
             try {
                 const index = this.client.initIndex(collection.config.index);
-                const data = await index.search(collection.config.search, {
+                const { hits: data, nbHits: total } = await index.search(collection.config.search, {
                     offset: collection.offset || 0,
-                    hitsPerPage: collection.limit || 20,
+                    length: collection.limit || 20,
                 });
-                return { data };
+                return { data, total };
             } catch (err) {
                 return {
                     error: Object.getOwnPropertyNames(err).reduce((obj, key) => ({ ...obj, [key]: err[key] }), {}),
