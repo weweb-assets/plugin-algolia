@@ -22,6 +22,9 @@ export default {
                 return !!index && !!search;
             },
             modes: ['dynamic'],
+            queryConfig: {
+                hasNativePagination: true,
+            },
         },
     },
     actions: [
