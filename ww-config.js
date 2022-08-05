@@ -24,6 +24,8 @@ export default {
             modes: ['dynamic'],
             queryConfig: {
                 hasNativePagination: true,
+                hasNativeSort: false,
+                hasNativeFilter: false,
             },
         },
     },
