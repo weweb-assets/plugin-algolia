@@ -21,19 +21,22 @@
         @update:modelValue="changeApiKey"
     />
     <wwEditorFormRow required label="Admin API Key">
-        <wwEditorInputText
-            type="text"
-            placeholder="********"
-            :model-value="settings.privateData.apiKey"
-            :style="{ '-webkit-text-security': isKeyVisible ? 'none' : 'disc' }"
-            large
-            @update:modelValue="changePrivateApiKey"
-        />
+        <div class="algolia-settings-edit__password">
+            <wwEditorInputText
+                :type="isKeyVisible ? 'text' : 'password'"
+                placeholder="********"
+                :model-value="settings.privateData.apiKey"
+                :style="{ '-webkit-text-security': isKeyVisible ? 'none' : 'disc' }"
+                large
+                @update:modelValue="changePrivateApiKey"
+            />
+            <wwEditorIcon
+                class="toggle"
+                :name="isKeyVisible ? 'eye-off' : 'eye'"
+                @click="isKeyVisible = !isKeyVisible"
+            ></wwEditorIcon>
+        </div>
     </wwEditorFormRow>
-    <div class="flex items-center">
-        <wwEditorInputSwitch v-model="isKeyVisible" />
-        <span class="ml-2 body-2">Show private api key</span>
-    </div>
 </template>
 
 <script>
@@ -76,3 +79,19 @@ export default {
     },
 };
 </script>
+
+<style lang="scss" scoped>
+.algolia-settings-edit {
+    &__password {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        input {
+            flex: auto;
+        }
+        .toggle {
+            cursor: pointer;
+        }
+    }
+}
+</style>
