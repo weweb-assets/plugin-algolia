@@ -397,7 +397,6 @@
             small
         />
     </wwEditorFormRow>
-
     <wwEditorInputRow
         v-if="database.searchParameters.includes('allowTyposOnNumericTokens')"
         label="Allow typos on numeric tokens"
@@ -469,8 +468,8 @@ export default {
                 { label: 'Highlight pre tag', value: 'highlightPreTag' },
                 { label: 'Highlight post tag', value: 'highlightPostTag' },
                 { label: 'Snippet ellipsis text', value: 'snippetEllipsisText' },
-                { label: 'Restrict Highlight and snippet arrays', value: 'restrictHighlightAndSnippetArrays' },
-                { title: 'typos', label: 'Min word size for 1 typo', value: 'minWordSizefor1Typo' },
+                { label: 'Restrict highlight and snippet arrays', value: 'restrictHighlightAndSnippetArrays' },
+                { title: 'Typos', label: 'Min word size for 1 typo', value: 'minWordSizefor1Typo' },
                 { label: 'Min word size for 2 typos', value: 'minWordSizefor2Typos' },
                 { label: 'Typo tolerance', value: 'typoTolerance' },
                 { label: 'Allow typos on numeric tokens', value: 'allowTyposOnNumericTokens' },
@@ -519,14 +518,10 @@ export default {
                 { label: 'Enable re-ranking', value: 'enableReRanking' },
             ],
             typoToleranceChoices: [
-                { label: 'true', value: true },
-                { label: 'false', value: false },
+                { label: 'True', value: true },
+                { label: 'False', value: false },
                 { label: 'min', value: 'min' },
                 { label: 'strict', value: 'strict' },
-            ],
-            booleanChoices: [
-                { label: 'true', value: true },
-                { label: 'false', value: false },
             ],
         };
     },
