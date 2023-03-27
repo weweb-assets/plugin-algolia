@@ -32,7 +32,7 @@ export default {
                     offset: collection.offset || 0,
                     length: collection.limit || 20,
                 });
-                return { data: _.get(data, collection.resultKey, data), total: data.nbHits };
+                return { data: _.get(data, collection.config.resultKey, data), total: data.nbHits };
             } catch (err) {
                 return {
                     error: Object.getOwnPropertyNames(err).reduce((obj, key) => ({ ...obj, [key]: err[key] }), {}),
