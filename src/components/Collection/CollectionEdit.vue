@@ -22,6 +22,14 @@
         :model-value="database.search"
         @update:modelValue="setProp('search', $event)"
     />
+    <wwEditorInputRow
+        label="Result key"
+        type="text"
+        :model-value="query.resultKey"
+        placeholder="result.key"
+        small
+        @update:modelValue="setProp('resultKey', $event)"
+    />
     <wwLoader :loading="isLoading" />
 </template>
 
