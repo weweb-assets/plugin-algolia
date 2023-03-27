@@ -24,14 +24,12 @@
         <div class="flex items-center">
             <wwEditorInputText
                 :type="isKeyVisible ? 'text' : 'password'"
-                placeholder="********"
+                placeholder="**************"
                 :model-value="settings.privateData.apiKey"
-                :style="{ '-webkit-text-security': isKeyVisible ? 'none' : 'disc' }"
-                large
-                @update:modelValue="changePrivateApiKey"
-                class="w-full mr-3"
+                @update:modelValue="changeApiKey"
+                class="w-100 mr-2"
             />
-            <button class="pointer" @click.prevent="isKeyVisible = !isKeyVisible">
+            <button class="ww-editor-button -icon -secondary -dark" @click.prevent="isKeyVisible = !isKeyVisible">
                 <wwEditorIcon :name="isKeyVisible ? 'eye-off' : 'eye'"></wwEditorIcon>
             </button>
         </div>
