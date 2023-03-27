@@ -183,15 +183,15 @@
             />
         </template>
     </wwEditorInputRow>
-    <wwEditorInputRow
-        v-if="database.searchParameters.includes('sumOrFiltersScores')"
-        label="Sum or filters scores"
-        type="boolean"
-        bindable
-        small
-        :model-value="database.sumOrFiltersScores"
-        @update:modelValue="setProp('sumOrFiltersScores', $event)"
-    />
+    <wwEditorFormRow v-if="database.searchParameters.includes('sumOrFiltersScores')" label="Sum or filters scores">
+        <wwEditorInputOnOff
+            label="Sum or filters scores"
+            bindable
+            small
+            :model-value="database.sumOrFiltersScores"
+            @update:modelValue="setProp('sumOrFiltersScores', $event)"
+        />
+    </wwEditorFormRow>
     <wwEditorInputRow
         v-if="database.searchParameters.includes('facets')"
         label="Facets"
@@ -234,15 +234,15 @@
             />
         </div>
     </wwEditorFormRow>
-    <wwEditorInputRow
-        v-if="database.searchParameters.includes('facetingAfterDistinct')"
-        label="Faceting after distinct"
-        type="boolean"
-        bindable
-        small
-        :model-value="database.facetingAfterDistinct"
-        @update:modelValue="setProp('facetingAfterDistinct', $event)"
-    />
+    <wwEditorFormRow v-if="database.searchParameters.includes('facetingAfterDistinct')" label="Faceting after distinct">
+        <wwEditorInputOnOff
+            label="Faceting after distinct"
+            bindable
+            small
+            :model-value="database.facetingAfterDistinct"
+            @update:modelValue="setProp('facetingAfterDistinct', $event)"
+        />
+    </wwEditorFormRow>
     <wwEditorInputRow
         v-if="database.searchParameters.includes('sortFacetValuesBy')"
         label="Sort facet values by"
@@ -323,15 +323,106 @@
         :model-value="database.snippetEllipsisText"
         @update:modelValue="setProp('snippetEllipsisText', $event)"
     />
-    <wwEditorInputRow
+    <wwEditorFormRow
         v-if="database.searchParameters.includes('restrictHighlightAndSnippetArrays')"
         label="Restrict highlight and snippet arrays"
-        type="boolean"
+    >
+        <wwEditorInputOnOff
+            label="Restrict highlight and snippet arrays"
+            bindable
+            small
+            :model-value="database.restrictHighlightAndSnippetArrays"
+            @update:modelValue="setProp('restrictHighlightAndSnippetArrays', $event)"
+        />
+    </wwEditorFormRow>
+    <wwEditorFormRow label="Min word size for 1 typo" v-if="database.searchParameters.includes('minWordSizefor1Typo')">
+        <div class="flex items-center">
+            <wwEditorInput
+                label="Enter a value"
+                type="number"
+                min="1"
+                max="100"
+                :model-value="database.minWordSizefor1Typo"
+                @update:modelValue="setProp('minWordSizefor1Typo', $event)"
+                bindable
+                small
+            />
+            <wwEditorInputRange
+                v-if="!isBound(database.minWordSizefor1Typo)"
+                class="ml-2"
+                min="1"
+                max="100"
+                :model-value="database.minWordSizefor1Typo"
+                @update:modelValue="setProp('minWordSizefor1Typo', $event)"
+            />
+        </div>
+    </wwEditorFormRow>
+    <wwEditorFormRow
+        label="Min word size for 2 typos"
+        v-if="database.searchParameters.includes('minWordSizefor2Typos')"
+    >
+        <div class="flex items-center">
+            <wwEditorInput
+                label="Enter a value"
+                type="number"
+                min="1"
+                max="100"
+                :model-value="database.minWordSizefor2Typos"
+                @update:modelValue="setProp('minWordSizefor2Typos', $event)"
+                bindable
+                small
+            />
+            <wwEditorInputRange
+                v-if="!isBound(database.minWordSizefor2Typos)"
+                class="ml-2"
+                min="1"
+                max="100"
+                :model-value="database.minWordSizefor2Typos"
+                @update:modelValue="setProp('minWordSizefor2Typos', $event)"
+            />
+        </div>
+    </wwEditorFormRow>
+    <wwEditorFormRow v-if="database.searchParameters.includes('typoTolerance')" label="Typo tolerance">
+        <wwEditorInputRadio
+            :choices="typoToleranceChoices"
+            :model-value="database.typoTolerance"
+            @update:modelValue="setProp('typoTolerance', $event)"
+            bindable
+            small
+        />
+    </wwEditorFormRow>
+    <wwEditorFormRow
+        v-if="database.searchParameters.includes('allowTyposOnNumericTokens')"
+        label="Allow typos on numeric tokens"
+    >
+        <wwEditorInputOnOff
+            label="Allow typos on numeric tokens"
+            bindable
+            small
+            :model-value="database.allowTyposOnNumericTokens"
+            @update:modelValue="setProp('allowTyposOnNumericTokens', $event)"
+        />
+    </wwEditorFormRow>
+    <wwEditorInputRow
+        v-if="database.searchParameters.includes('disableTypoToleranceOnAttributes')"
+        label="Disable typo tolerance on attributes"
+        type="array"
+        :model-value="database.disableTypoToleranceOnAttributes"
         bindable
-        small
-        :model-value="database.restrictHighlightAndSnippetArrays"
-        @update:modelValue="setProp('restrictHighlightAndSnippetArrays', $event)"
-    />
+        @update:modelValue="setProp('disableTypoToleranceOnAttributes', $event)"
+        @add-item="setProp('disableTypoToleranceOnAttributes', [...database.disableTypoToleranceOnAttributes, ''])"
+    >
+        <template #default="{ item, setItem }">
+            <wwEditorInputRow
+                placeholder="Enter a value"
+                type="query"
+                :model-value="item"
+                @update:modelValue="setItem"
+                bindable
+                small
+            />
+        </template>
+    </wwEditorInputRow>
     <wwEditorInputRow
         label="Result key"
         type="query"
@@ -375,11 +466,21 @@ export default {
                 { label: 'Highlight post tag', value: 'highlightPostTag' },
                 { label: 'Snippet ellipsis text', value: 'snippetEllipsisText' },
                 { label: 'Restrict Highlight and snippet arrays', value: 'restrictHighlightAndSnippetArrays' },
-                { title: 'typos', label: 'TODO: minWordSizefor1Typo', value: 'minWordSizefor1Typo' },
-                { label: 'TODO: minWordSizefor2Typos', value: 'minWordSizefor2Typos' },
-                { label: 'TODO: typoTolerance', value: 'typoTolerance' },
-                { label: 'TODO: allowTyposOnNumericTokens', value: 'allowTyposOnNumericTokens' },
-                { label: 'TODO: disableTypoToleranceOnAttributes', value: 'disableTypoToleranceOnAttributes' },
+                { title: 'typos', label: 'Min word size for 1 typo', value: 'minWordSizefor1Typo' },
+                { label: 'Min word size for 2 typos', value: 'minWordSizefor2Typos' },
+                { label: 'Typo tolerance', value: 'typoTolerance' },
+                { label: 'Allow typos on numeric tokens', value: 'allowTyposOnNumericTokens' },
+                { label: 'Disable typo tolerance on attributes', value: 'disableTypoToleranceOnAttributes' },
+            ],
+            typoToleranceChoices: [
+                { label: 'true', value: true },
+                { label: 'false', value: false },
+                { label: 'min', value: 'min' },
+                { label: 'strict', value: 'strict' },
+            ],
+            booleanChoices: [
+                { label: 'true', value: true },
+                { label: 'false', value: false },
             ],
         };
     },
@@ -408,6 +509,11 @@ export default {
                 highlightPostTag: '',
                 snippetEllipsisText: '...',
                 restrictHighlightAndSnippetArrays: false,
+                minWordSizefor1Typo: 4,
+                minWordSizefor2Typos: 8,
+                typoTolerance: true,
+                allowTyposOnNumericTokens: true,
+                disableTypoToleranceOnAttributes: [],
                 ...this.config,
             };
         },
