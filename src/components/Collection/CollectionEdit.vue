@@ -397,18 +397,16 @@
             small
         />
     </wwEditorFormRow>
-    <wwEditorFormRow
+
+    <wwEditorInputRow
         v-if="database.searchParameters.includes('allowTyposOnNumericTokens')"
         label="Allow typos on numeric tokens"
-    >
-        <wwEditorInputRadio
-            :choices="booleanChoices"
-            :model-value="database.allowTyposOnNumericTokens"
-            @update:modelValue="setProp('allowTyposOnNumericTokens', $event)"
-            bindable
-            small
-        />
-    </wwEditorFormRow>
+        type="boolean"
+        bindable
+        small
+        :model-value="database.allowTyposOnNumericTokens"
+        @update:modelValue="setProp('allowTyposOnNumericTokens', $event)"
+    />
     <wwEditorInputRow
         v-if="database.searchParameters.includes('disableTypoToleranceOnAttributes')"
         label="Disable typo tolerance on attributes"
@@ -477,6 +475,48 @@ export default {
                 { label: 'Typo tolerance', value: 'typoTolerance' },
                 { label: 'Allow typos on numeric tokens', value: 'allowTyposOnNumericTokens' },
                 { label: 'Disable typo tolerance on attributes', value: 'disableTypoToleranceOnAttributes' },
+                { title: 'Geo search', label: 'Around lat lng', value: 'aroundLatLng' },
+                { label: 'Around lat lng via IP', value: 'aroundLatLngViaIP' },
+                { label: 'Around radius', value: 'aroundRadius' },
+                { label: 'Around precision', value: 'aroundPrecision' },
+                { label: 'Minimum around radius', value: 'minimumAroundRadius' },
+                { label: 'Inside bounding box', value: 'insideBoundingBox' },
+                { label: 'Inside polygon', value: 'insidePolygon' },
+                { title: 'Languages', label: 'Ignore plurals', value: 'ignorePlurals' },
+                { label: 'Remove stop words', value: 'removeStopWords' },
+                { label: 'Query languages', value: 'queryLanguages' },
+                { label: 'Natural languages', value: 'naturalLanguages' },
+                { label: 'Decompound query', value: 'decompoundQuery' },
+                { title: 'Rules', label: 'Enable rules', value: 'enableRules' },
+                { label: 'Rule contexts', value: 'ruleContexts' },
+                { title: 'Personalization', label: 'Enable personalization', value: 'enablePersonalization' },
+                { label: 'Personalization impact', value: 'personalizationImpact' },
+                { label: 'User token', value: 'userToken' },
+                { title: 'Query strategy', label: 'Query type', value: 'queryType' },
+                { label: 'Remove words if no results', value: 'removeWordsIfNoResults' },
+                { label: 'Advanced syntax', value: 'advancedSyntax' },
+                { label: 'Optional words', value: 'optionalWords' },
+                { label: 'Disable exact on attributes', value: 'disableExactOnAttributes' },
+                { label: 'Exact on single word query', value: 'exactOnSingleWordQuery' },
+                { label: 'Alternatives as exact', value: 'alternativesAsExact' },
+                { label: 'Advanced syntax features', value: 'advancedSyntaxFeatures' },
+                { title: 'Advanced', label: 'Distinct', value: 'distinct' },
+                { label: 'Get ranking info', value: 'getRankingInfo' },
+                { label: 'Click analytics', value: 'clickAnalytics' },
+                { label: 'Analytics', value: 'analytics' },
+                { label: 'Analytics tags', value: 'analyticsTags' },
+                { label: 'Synonyms', value: 'synonyms' },
+                { label: 'Replace synonyms in highlight', value: 'replaceSynonymsInHighlight' },
+                { label: 'Min proximity', value: 'minProximity' },
+                { label: 'Response fields', value: 'responseFields' },
+                { label: 'Max facet hits', value: 'maxFacetHits' },
+                { label: 'Percentile computation', value: 'percentileComputation' },
+                {
+                    label: 'Attribute criteria computed by min proximity',
+                    value: 'attributeCriteriaComputedByMinProximity',
+                },
+                { label: 'Enable AB test', value: 'enableABTest' },
+                { label: 'Enable re-ranking', value: 'enableReRanking' },
             ],
             typoToleranceChoices: [
                 { label: 'true', value: true },
