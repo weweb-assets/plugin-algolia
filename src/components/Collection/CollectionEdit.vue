@@ -25,7 +25,7 @@
     <wwEditorInputRow
         label="Result key"
         type="text"
-        :model-value="query.resultKey"
+        :model-value="database.resultKey"
         placeholder="result.key"
         small
         @update:modelValue="setProp('resultKey', $event)"
