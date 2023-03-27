@@ -26,7 +26,7 @@
                 :type="isKeyVisible ? 'text' : 'password'"
                 placeholder="**************"
                 :model-value="settings.privateData.apiKey"
-                @update:modelValue="changeApiKey"
+                @update:modelValue="changePrivateApiKey"
                 class="w-100 mr-2"
             />
             <button class="ww-editor-button -icon -secondary -dark" @click.prevent="isKeyVisible = !isKeyVisible">
