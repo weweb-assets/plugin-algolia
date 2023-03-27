@@ -23,6 +23,46 @@
         @update:modelValue="setProp('search', $event)"
     />
     <wwEditorInputRow
+        label="Search Parameters"
+        type="select"
+        multiple
+        :options="tablesFieldsOptions"
+        :model-value="database.searchParameters"
+        placeholder="Select parameters"
+        @update:modelValue="setProp('searchParameters', $event)"
+    />
+    <wwEditorInputRow
+        v-if="database.searchParameters.includes('filters')"
+        label="Filters"
+        type="query"
+        placeholder="Enter a value"
+        bindable
+        small
+        :model-value="database.filters"
+        @update:modelValue="setProp('filters', $event)"
+    />
+    <wwEditorFormRow label="Relevancy strictness" v-if="database.searchParameters.includes('relevancyStrictness')">
+        <div class="flex items-center">
+            <wwEditorInput
+                label="Enter a value"
+                type="number"
+                min="0"
+                max="100"
+                :model-value="database.relevancyStrictness"
+                @update:modelValue="setProp('relevancyStrictness', $event)"
+                bindable
+                small
+            />
+            <wwEditorInputRange
+                class="ml-2"
+                min="1"
+                max="100"
+                :model-value="database.relevancyStrictness"
+                @update:modelValue="setProp('relevancyStrictness', $event)"
+            />
+        </div>
+    </wwEditorFormRow>
+    <wwEditorInputRow
         label="Result key"
         type="query"
         :model-value="database.resultKey"
@@ -45,6 +85,32 @@ export default {
         return {
             isLoading: false,
             indexes: [],
+            searchParametersOptions: [
+                { label: 'TODO: attributesToRetrieve', value: 'attributesToRetrieve' },
+                { label: 'TODO: restrictSearchableAttributes', value: 'restrictSearchableAttributes' },
+                { label: 'Relevancy strictness', value: 'relevancyStrictness' },
+                { label: 'Filters', value: 'filters' },
+                { label: 'TODO: facetFilters', value: 'facetFilters' },
+                { label: 'TODO: optionalFilters', value: 'optionalFilters' },
+                { label: 'TODO: numericFilters', value: 'numericFilters' },
+                { label: 'TODO: tagFilters', value: 'tagFilters' },
+                { label: 'TODO: sumOrFiltersScores', value: 'sumOrFiltersScores' },
+                { label: 'TODO: facets', value: 'facets' },
+                { label: 'TODO: maxValuesPerFacet', value: 'maxValuesPerFacet' },
+                { label: 'TODO: facetingAfterDistinct', value: 'facetingAfterDistinct' },
+                { label: 'TODO: sortFacetValuesBy', value: 'sortFacetValuesBy' },
+                { label: 'TODO: attributesToHighlight', value: 'attributesToHighlight' },
+                { label: 'TODO: attributesToSnippet', value: 'attributesToSnippet' },
+                { label: 'TODO: highlightPreTag', value: 'highlightPreTag' },
+                { label: 'TODO: highlightPostTag', value: 'highlightPostTag' },
+                { label: 'TODO: snippetEllipsisText', value: 'snippetEllipsisText' },
+                { label: 'TODO: restrictHighlightAndSnippetArrays', value: 'restrictHighlightAndSnippetArrays' },
+                { label: 'TODO: minWordSizefor1Typo', value: 'minWordSizefor1Typo' },
+                { label: 'TODO: minWordSizefor2Typos', value: 'minWordSizefor2Typos' },
+                { label: 'TODO: typoTolerance', value: 'typoTolerance' },
+                { label: 'TODO: allowTyposOnNumericTokens', value: 'allowTyposOnNumericTokens' },
+                { label: 'TODO: disableTypoToleranceOnAttributes', value: 'disableTypoToleranceOnAttributes' },
+            ],
         };
     },
     computed: {
@@ -52,6 +118,9 @@ export default {
             return {
                 index: null,
                 search: null,
+                searchParameters: [],
+                filters: '',
+                relevancyStrictness: 100,
                 ...this.config,
             };
         },
