@@ -26,7 +26,7 @@
         label="Search Parameters"
         type="select"
         multiple
-        :options="tablesFieldsOptions"
+        :options="searchParametersOptions"
         :model-value="database.searchParameters"
         placeholder="Select parameters"
         @update:modelValue="setProp('searchParameters', $event)"
@@ -54,11 +54,34 @@
                 small
             />
             <wwEditorInputRange
+                v-if="!isBound(database.relevancyStrictness)"
                 class="ml-2"
-                min="1"
+                min="0"
                 max="100"
                 :model-value="database.relevancyStrictness"
                 @update:modelValue="setProp('relevancyStrictness', $event)"
+            />
+        </div>
+    </wwEditorFormRow>
+    <wwEditorFormRow label="Max values per facet" v-if="database.searchParameters.includes('maxValuesPerFacet')">
+        <div class="flex items-center">
+            <wwEditorInput
+                label="Enter a value"
+                type="number"
+                min="1"
+                max="1000"
+                :model-value="database.maxValuesPerFacet"
+                @update:modelValue="setProp('maxValuesPerFacet', $event)"
+                bindable
+                small
+            />
+            <wwEditorInputRange
+                v-if="!isBound(database.maxValuesPerFacet)"
+                class="ml-2"
+                min="1"
+                max="1000"
+                :model-value="database.maxValuesPerFacet"
+                @update:modelValue="setProp('maxValuesPerFacet', $event)"
             />
         </div>
     </wwEditorFormRow>
@@ -96,7 +119,7 @@ export default {
                 { label: 'TODO: tagFilters', value: 'tagFilters' },
                 { label: 'TODO: sumOrFiltersScores', value: 'sumOrFiltersScores' },
                 { label: 'TODO: facets', value: 'facets' },
-                { label: 'TODO: maxValuesPerFacet', value: 'maxValuesPerFacet' },
+                { label: 'Max values per facet', value: 'maxValuesPerFacet' },
                 { label: 'TODO: facetingAfterDistinct', value: 'facetingAfterDistinct' },
                 { label: 'TODO: sortFacetValuesBy', value: 'sortFacetValuesBy' },
                 { label: 'TODO: attributesToHighlight', value: 'attributesToHighlight' },
@@ -121,6 +144,7 @@ export default {
                 searchParameters: [],
                 filters: '',
                 relevancyStrictness: 100,
+                maxValuesPerFacet: 100,
                 ...this.config,
             };
         },
@@ -132,6 +156,9 @@ export default {
         this.indexes = this.plugin.indexes || [];
     },
     methods: {
+        isBound(value) {
+            return typeof value === 'object';
+        },
         setProp(key, value) {
             this.$emit('update:config', { ...this.database, [key]: value });
         },
