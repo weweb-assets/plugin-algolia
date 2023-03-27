@@ -24,7 +24,7 @@
     />
     <wwEditorInputRow
         label="Result key"
-        type="text"
+        type="query"
         :model-value="database.resultKey"
         placeholder="result.key"
         small
