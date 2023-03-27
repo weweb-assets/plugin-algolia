@@ -71,16 +71,6 @@
             />
         </template>
     </wwEditorInputRow>
-    <wwEditorInputRow
-        v-if="database.searchParameters.includes('filters')"
-        label="Filters"
-        type="query"
-        placeholder="Enter a value"
-        bindable
-        small
-        :model-value="database.filters"
-        @update:modelValue="setProp('filters', $event)"
-    />
     <wwEditorFormRow label="Relevancy strictness" v-if="database.searchParameters.includes('relevancyStrictness')">
         <div class="flex items-center">
             <wwEditorInput
@@ -103,6 +93,125 @@
             />
         </div>
     </wwEditorFormRow>
+    <wwEditorInputRow
+        v-if="database.searchParameters.includes('filters')"
+        label="Filters"
+        type="query"
+        placeholder="Enter a value"
+        bindable
+        small
+        :model-value="database.filters"
+        @update:modelValue="setProp('filters', $event)"
+    />
+    <wwEditorInputRow
+        v-if="database.searchParameters.includes('facetFilters')"
+        label="Facet filters"
+        type="array"
+        :model-value="database.facetFilters"
+        bindable
+        @update:modelValue="setProp('facetFilters', $event)"
+        @add-item="setProp('facetFilters', [...database.facetFilters, ''])"
+    >
+        <template #default="{ item, setItem }">
+            <wwEditorInputRow
+                placeholder="Enter a value"
+                type="query"
+                :model-value="item"
+                @update:modelValue="setItem"
+                bindable
+                small
+            />
+        </template>
+    </wwEditorInputRow>
+    <wwEditorInputRow
+        v-if="database.searchParameters.includes('optionalFilters')"
+        label="Optional filters"
+        type="array"
+        :model-value="database.optionalFilters"
+        bindable
+        @update:modelValue="setProp('optionalFilters', $event)"
+        @add-item="setProp('optionalFilters', [...database.optionalFilters, ''])"
+    >
+        <template #default="{ item, setItem }">
+            <wwEditorInputRow
+                placeholder="Enter a value"
+                type="query"
+                :model-value="item"
+                @update:modelValue="setItem"
+                bindable
+                small
+            />
+        </template>
+    </wwEditorInputRow>
+    <wwEditorInputRow
+        v-if="database.searchParameters.includes('numericFilters')"
+        label="Numeric filters"
+        type="array"
+        :model-value="database.numericFilters"
+        bindable
+        @update:modelValue="setProp('numericFilters', $event)"
+        @add-item="setProp('numericFilters', [...database.numericFilters, ''])"
+    >
+        <template #default="{ item, setItem }">
+            <wwEditorInputRow
+                placeholder="Enter a value"
+                type="query"
+                :model-value="item"
+                @update:modelValue="setItem"
+                bindable
+                small
+            />
+        </template>
+    </wwEditorInputRow>
+    <wwEditorInputRow
+        v-if="database.searchParameters.includes('tagFilters')"
+        label="Tag filters"
+        type="array"
+        :model-value="database.tagFilters"
+        bindable
+        @update:modelValue="setProp('tagFilters', $event)"
+        @add-item="setProp('tagFilters', [...database.tagFilters, ''])"
+    >
+        <template #default="{ item, setItem }">
+            <wwEditorInputRow
+                placeholder="Enter a value"
+                type="query"
+                :model-value="item"
+                @update:modelValue="setItem"
+                bindable
+                small
+            />
+        </template>
+    </wwEditorInputRow>
+    <wwEditorInputRow
+        v-if="database.searchParameters.includes('sumOrFiltersScores')"
+        label="Sum or filters scores"
+        type="boolean"
+        bindable
+        small
+        :model-value="database.sumOrFiltersScores"
+        @update:modelValue="setProp('sumOrFiltersScores', $event)"
+    />
+    <wwEditorInputRow
+        v-if="database.searchParameters.includes('facets')"
+        label="Facets"
+        type="array"
+        :model-value="database.facets"
+        bindable
+        @update:modelValue="setProp('facets', $event)"
+        @add-item="setProp('facets', [...database.facets, ''])"
+    >
+        <template #default="{ item, setItem }">
+            <wwEditorInputRow
+                placeholder="Enter a value"
+                type="query"
+                :model-value="item"
+                @update:modelValue="setItem"
+                bindable
+                small
+            />
+        </template>
+    </wwEditorInputRow>
     <wwEditorFormRow label="Max values per facet" v-if="database.searchParameters.includes('maxValuesPerFacet')">
         <div class="flex items-center">
             <wwEditorInput
@@ -125,6 +234,15 @@
             />
         </div>
     </wwEditorFormRow>
+    <wwEditorInputRow
+        v-if="database.searchParameters.includes('facetingAfterDistinct')"
+        label="Faceting after distinct"
+        type="boolean"
+        bindable
+        small
+        :model-value="database.facetingAfterDistinct"
+        @update:modelValue="setProp('facetingAfterDistinct', $event)"
+    />
     <wwEditorInputRow
         v-if="database.searchParameters.includes('sortFacetValuesBy')"
         label="Sort facet values by"
@@ -163,14 +281,14 @@ export default {
                 { label: 'Restrict searchable attributes', value: 'restrictSearchableAttributes' },
                 { label: 'Relevancy strictness', value: 'relevancyStrictness' },
                 { label: 'Filters', value: 'filters' },
-                { label: 'TODO: facetFilters', value: 'facetFilters' },
-                { label: 'TODO: optionalFilters', value: 'optionalFilters' },
-                { label: 'TODO: numericFilters', value: 'numericFilters' },
-                { label: 'TODO: tagFilters', value: 'tagFilters' },
-                { label: 'TODO: sumOrFiltersScores', value: 'sumOrFiltersScores' },
-                { label: 'TODO: facets', value: 'facets' },
+                { label: 'Facet filters', value: 'facetFilters' },
+                { label: 'Optional filters', value: 'optionalFilters' },
+                { label: 'Numeric filters', value: 'numericFilters' },
+                { label: 'Tag filters', value: 'tagFilters' },
+                { label: 'Sum or filters scores', value: 'sumOrFiltersScores' },
+                { label: 'Facets', value: 'facets' },
                 { label: 'Max values per facet', value: 'maxValuesPerFacet' },
-                { label: 'TODO: facetingAfterDistinct', value: 'facetingAfterDistinct' },
+                { label: 'Faceting after distinct', value: 'facetingAfterDistinct' },
                 { label: 'Sort facet values by', value: 'sortFacetValuesBy' },
                 { label: 'TODO: attributesToHighlight', value: 'attributesToHighlight' },
                 { label: 'TODO: attributesToSnippet', value: 'attributesToSnippet' },
@@ -194,9 +312,16 @@ export default {
                 searchParameters: [],
                 attributesToRetrieve: [],
                 restrictSearchableAttributes: [],
-                filters: '',
                 relevancyStrictness: 100,
+                filters: '',
+                facetFilters: [],
+                optionalFilters: [],
+                numericFilters: [],
+                tagFilters: [],
+                sumOrFiltersScores: false,
+                facets: [],
                 maxValuesPerFacet: 100,
+                facetingAfterDistinct: false,
                 sortFacetValuesBy: '',
                 ...this.config,
             };
