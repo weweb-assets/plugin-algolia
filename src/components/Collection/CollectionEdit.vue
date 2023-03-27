@@ -32,6 +32,46 @@
         @update:modelValue="setProp('searchParameters', $event)"
     />
     <wwEditorInputRow
+        v-if="database.searchParameters.includes('attributesToRetrieve')"
+        label="Attributes to retrieve"
+        type="array"
+        :model-value="database.attributesToRetrieve"
+        bindable
+        @update:modelValue="setProp('attributesToRetrieve', $event)"
+        @add-item="setProp('attributesToRetrieve', [...database.attributesToRetrieve, ''])"
+    >
+        <template #default="{ item, setItem }">
+            <wwEditorInputRow
+                placeholder="Enter a value"
+                type="query"
+                :model-value="item"
+                @update:modelValue="setItem"
+                bindable
+                small
+            />
+        </template>
+    </wwEditorInputRow>
+    <wwEditorInputRow
+        v-if="database.searchParameters.includes('restrictSearchableAttributes')"
+        label="Restrict searchable attributes"
+        type="array"
+        :model-value="database.restrictSearchableAttributes"
+        bindable
+        @update:modelValue="setProp('restrictSearchableAttributes', $event)"
+        @add-item="setProp('restrictSearchableAttributes', [...database.restrictSearchableAttributes, ''])"
+    >
+        <template #default="{ item, setItem }">
+            <wwEditorInputRow
+                placeholder="Enter a value"
+                type="query"
+                :model-value="item"
+                @update:modelValue="setItem"
+                bindable
+                small
+            />
+        </template>
+    </wwEditorInputRow>
+    <wwEditorInputRow
         v-if="database.searchParameters.includes('filters')"
         label="Filters"
         type="query"
@@ -86,6 +126,16 @@
         </div>
     </wwEditorFormRow>
     <wwEditorInputRow
+        v-if="database.searchParameters.includes('sortFacetValuesBy')"
+        label="Sort facet values by"
+        type="query"
+        placeholder="Enter a value"
+        bindable
+        small
+        :model-value="database.sortFacetValuesBy"
+        @update:modelValue="setProp('sortFacetValuesBy', $event)"
+    />
+    <wwEditorInputRow
         label="Result key"
         type="query"
         :model-value="database.resultKey"
@@ -109,8 +159,8 @@ export default {
             isLoading: false,
             indexes: [],
             searchParametersOptions: [
-                { label: 'TODO: attributesToRetrieve', value: 'attributesToRetrieve' },
-                { label: 'TODO: restrictSearchableAttributes', value: 'restrictSearchableAttributes' },
+                { label: 'Attributes to retrieve', value: 'attributesToRetrieve' },
+                { label: 'Restrict searchable attributes', value: 'restrictSearchableAttributes' },
                 { label: 'Relevancy strictness', value: 'relevancyStrictness' },
                 { label: 'Filters', value: 'filters' },
                 { label: 'TODO: facetFilters', value: 'facetFilters' },
@@ -121,7 +171,7 @@ export default {
                 { label: 'TODO: facets', value: 'facets' },
                 { label: 'Max values per facet', value: 'maxValuesPerFacet' },
                 { label: 'TODO: facetingAfterDistinct', value: 'facetingAfterDistinct' },
-                { label: 'TODO: sortFacetValuesBy', value: 'sortFacetValuesBy' },
+                { label: 'Sort facet values by', value: 'sortFacetValuesBy' },
                 { label: 'TODO: attributesToHighlight', value: 'attributesToHighlight' },
                 { label: 'TODO: attributesToSnippet', value: 'attributesToSnippet' },
                 { label: 'TODO: highlightPreTag', value: 'highlightPreTag' },
@@ -142,9 +192,12 @@ export default {
                 index: null,
                 search: null,
                 searchParameters: [],
+                attributesToRetrieve: [],
+                restrictSearchableAttributes: [],
                 filters: '',
                 relevancyStrictness: 100,
                 maxValuesPerFacet: 100,
+                sortFacetValuesBy: '',
                 ...this.config,
             };
         },
