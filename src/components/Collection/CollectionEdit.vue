@@ -254,6 +254,85 @@
         @update:modelValue="setProp('sortFacetValuesBy', $event)"
     />
     <wwEditorInputRow
+        v-if="database.searchParameters.includes('attributesToHighlight')"
+        label="Attributes to highlight"
+        type="array"
+        :model-value="database.attributesToHighlight"
+        bindable
+        @update:modelValue="setProp('attributesToHighlight', $event)"
+        @add-item="setProp('attributesToHighlight', [...database.attributesToHighlight, ''])"
+    >
+        <template #default="{ item, setItem }">
+            <wwEditorInputRow
+                placeholder="Enter a value"
+                type="query"
+                :model-value="item"
+                @update:modelValue="setItem"
+                bindable
+                small
+            />
+        </template>
+    </wwEditorInputRow>
+    <wwEditorInputRow
+        v-if="database.searchParameters.includes('attributesToSnippet')"
+        label="Attributes to snippet"
+        type="array"
+        :model-value="database.attributesToSnippet"
+        bindable
+        @update:modelValue="setProp('attributesToSnippet', $event)"
+        @add-item="setProp('attributesToSnippet', [...database.attributesToSnippet, ''])"
+    >
+        <template #default="{ item, setItem }">
+            <wwEditorInputRow
+                placeholder="Enter a value"
+                type="query"
+                :model-value="item"
+                @update:modelValue="setItem"
+                bindable
+                small
+            />
+        </template>
+    </wwEditorInputRow>
+    <wwEditorInputRow
+        v-if="database.searchParameters.includes('highlightPreTag')"
+        label="Highlight pre tag"
+        type="query"
+        placeholder="Enter a value"
+        bindable
+        small
+        :model-value="database.highlightPreTag"
+        @update:modelValue="setProp('highlightPreTag', $event)"
+    />
+    <wwEditorInputRow
+        v-if="database.searchParameters.includes('highlightPostTag')"
+        label="Highlight post tag"
+        type="query"
+        placeholder="Enter a value"
+        bindable
+        small
+        :model-value="database.highlightPostTag"
+        @update:modelValue="setProp('highlightPostTag', $event)"
+    />
+    <wwEditorInputRow
+        v-if="database.searchParameters.includes('snippetEllipsisText')"
+        label="Snippet ellipsis text"
+        type="query"
+        placeholder="Enter a value"
+        bindable
+        small
+        :model-value="database.snippetEllipsisText"
+        @update:modelValue="setProp('snippetEllipsisText', $event)"
+    />
+    <wwEditorInputRow
+        v-if="database.searchParameters.includes('restrictHighlightAndSnippetArrays')"
+        label="Restrict highlight and snippet arrays"
+        type="boolean"
+        bindable
+        small
+        :model-value="database.restrictHighlightAndSnippetArrays"
+        @update:modelValue="setProp('restrictHighlightAndSnippetArrays', $event)"
+    />
+    <wwEditorInputRow
         label="Result key"
         type="query"
         :model-value="database.resultKey"
@@ -277,26 +356,26 @@ export default {
             isLoading: false,
             indexes: [],
             searchParametersOptions: [
-                { label: 'Attributes to retrieve', value: 'attributesToRetrieve' },
+                { title: 'Attributes', label: 'Attributes to retrieve', value: 'attributesToRetrieve' },
                 { label: 'Restrict searchable attributes', value: 'restrictSearchableAttributes' },
-                { label: 'Relevancy strictness', value: 'relevancyStrictness' },
-                { label: 'Filters', value: 'filters' },
+                { title: 'Ranking', label: 'Relevancy strictness', value: 'relevancyStrictness' },
+                { title: 'Filtering', label: 'Filters', value: 'filters' },
                 { label: 'Facet filters', value: 'facetFilters' },
                 { label: 'Optional filters', value: 'optionalFilters' },
                 { label: 'Numeric filters', value: 'numericFilters' },
                 { label: 'Tag filters', value: 'tagFilters' },
                 { label: 'Sum or filters scores', value: 'sumOrFiltersScores' },
-                { label: 'Facets', value: 'facets' },
+                { title: 'Faceting', label: 'Facets', value: 'facets' },
                 { label: 'Max values per facet', value: 'maxValuesPerFacet' },
                 { label: 'Faceting after distinct', value: 'facetingAfterDistinct' },
                 { label: 'Sort facet values by', value: 'sortFacetValuesBy' },
-                { label: 'TODO: attributesToHighlight', value: 'attributesToHighlight' },
-                { label: 'TODO: attributesToSnippet', value: 'attributesToSnippet' },
-                { label: 'TODO: highlightPreTag', value: 'highlightPreTag' },
-                { label: 'TODO: highlightPostTag', value: 'highlightPostTag' },
-                { label: 'TODO: snippetEllipsisText', value: 'snippetEllipsisText' },
-                { label: 'TODO: restrictHighlightAndSnippetArrays', value: 'restrictHighlightAndSnippetArrays' },
-                { label: 'TODO: minWordSizefor1Typo', value: 'minWordSizefor1Typo' },
+                { title: 'Highlighting snippeting', label: 'Attributes to highlight', value: 'attributesToHighlight' },
+                { label: 'Attributes to snippet', value: 'attributesToSnippet' },
+                { label: 'Highlight pre tag', value: 'highlightPreTag' },
+                { label: 'Highlight post tag', value: 'highlightPostTag' },
+                { label: 'Snippet ellipsis text', value: 'snippetEllipsisText' },
+                { label: 'Restrict Highlight and snippet arrays', value: 'restrictHighlightAndSnippetArrays' },
+                { title: 'typos', label: 'TODO: minWordSizefor1Typo', value: 'minWordSizefor1Typo' },
                 { label: 'TODO: minWordSizefor2Typos', value: 'minWordSizefor2Typos' },
                 { label: 'TODO: typoTolerance', value: 'typoTolerance' },
                 { label: 'TODO: allowTyposOnNumericTokens', value: 'allowTyposOnNumericTokens' },
@@ -323,6 +402,12 @@ export default {
                 maxValuesPerFacet: 100,
                 facetingAfterDistinct: false,
                 sortFacetValuesBy: '',
+                attributesToHighlight: [],
+                attributesToSnippet: [],
+                highlightPreTag: '',
+                highlightPostTag: '',
+                snippetEllipsisText: '...',
+                restrictHighlightAndSnippetArrays: false,
                 ...this.config,
             };
         },
