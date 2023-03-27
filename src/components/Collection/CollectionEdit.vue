@@ -183,15 +183,15 @@
             />
         </template>
     </wwEditorInputRow>
-    <wwEditorFormRow v-if="database.searchParameters.includes('sumOrFiltersScores')" label="Sum or filters scores">
-        <wwEditorInputOnOff
-            label="Sum or filters scores"
-            bindable
-            small
-            :model-value="database.sumOrFiltersScores"
-            @update:modelValue="setProp('sumOrFiltersScores', $event)"
-        />
-    </wwEditorFormRow>
+    <wwEditorInputRow
+        v-if="database.searchParameters.includes('sumOrFiltersScores')"
+        label="Sum or filters scores"
+        type="boolean"
+        bindable
+        small
+        :model-value="database.sumOrFiltersScores"
+        @update:modelValue="setProp('sumOrFiltersScores', $event)"
+    />
     <wwEditorInputRow
         v-if="database.searchParameters.includes('facets')"
         label="Facets"
@@ -234,15 +234,15 @@
             />
         </div>
     </wwEditorFormRow>
-    <wwEditorFormRow v-if="database.searchParameters.includes('facetingAfterDistinct')" label="Faceting after distinct">
-        <wwEditorInputOnOff
-            label="Faceting after distinct"
-            bindable
-            small
-            :model-value="database.facetingAfterDistinct"
-            @update:modelValue="setProp('facetingAfterDistinct', $event)"
-        />
-    </wwEditorFormRow>
+    <wwEditorInputRow
+        v-if="database.searchParameters.includes('facetingAfterDistinct')"
+        label="Faceting after distinct"
+        type="boolean"
+        bindable
+        small
+        :model-value="database.facetingAfterDistinct"
+        @update:modelValue="setProp('facetingAfterDistinct', $event)"
+    />
     <wwEditorInputRow
         v-if="database.searchParameters.includes('sortFacetValuesBy')"
         label="Sort facet values by"
@@ -323,18 +323,24 @@
         :model-value="database.snippetEllipsisText"
         @update:modelValue="setProp('snippetEllipsisText', $event)"
     />
-    <wwEditorFormRow
+    <wwEditorInputRow
         v-if="database.searchParameters.includes('restrictHighlightAndSnippetArrays')"
         label="Restrict highlight and snippet arrays"
-    >
-        <wwEditorInputOnOff
-            label="Restrict highlight and snippet arrays"
-            bindable
-            small
-            :model-value="database.restrictHighlightAndSnippetArrays"
-            @update:modelValue="setProp('restrictHighlightAndSnippetArrays', $event)"
-        />
-    </wwEditorFormRow>
+        type="boolean"
+        bindable
+        small
+        :model-value="database.restrictHighlightAndSnippetArrays"
+        @update:modelValue="setProp('restrictHighlightAndSnippetArrays', $event)"
+    />
+    <wwEditorInputRow
+        v-if="database.searchParameters.includes('restrictHighlightAndSnippetArrays')"
+        label="Restrict highlight and snippet arrays"
+        type="boolean"
+        bindable
+        small
+        :model-value="database.restrictHighlightAndSnippetArrays"
+        @update:modelValue="setProp('restrictHighlightAndSnippetArrays', $event)"
+    />
     <wwEditorFormRow label="Min word size for 1 typo" v-if="database.searchParameters.includes('minWordSizefor1Typo')">
         <div class="flex items-center">
             <wwEditorInput
@@ -395,12 +401,12 @@
         v-if="database.searchParameters.includes('allowTyposOnNumericTokens')"
         label="Allow typos on numeric tokens"
     >
-        <wwEditorInputOnOff
-            label="Allow typos on numeric tokens"
-            bindable
-            small
+        <wwEditorInputRadio
+            :choices="booleanChoices"
             :model-value="database.allowTyposOnNumericTokens"
             @update:modelValue="setProp('allowTyposOnNumericTokens', $event)"
+            bindable
+            small
         />
     </wwEditorFormRow>
     <wwEditorInputRow
