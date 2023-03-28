@@ -41,15 +41,17 @@
         @add-item="setProp('attributesToRetrieve', [...database.attributesToRetrieve, ''])"
     >
         <template #default="{ item, setItem }">
-            <wwEditorInputRow
-                label="Attribute to retrieve"
-                placeholder="Enter a value"
-                type="query"
-                :model-value="item"
-                @update:modelValue="setItem"
-                bindable
-                small
-            />
+            <wwEditorFormRow>
+                <wwEditorInput
+                    label="Attribute to retrieve"
+                    placeholder="Enter a value"
+                    type="query"
+                    :model-value="item"
+                    @update:modelValue="setItem"
+                    bindable
+                    small
+                />
+            </wwEditorFormRow>
         </template>
     </wwEditorInputRow>
     <wwEditorInputRow
@@ -116,15 +118,17 @@
         @add-item="setProp('facetFilters', [...database.facetFilters, ''])"
     >
         <template #default="{ item, setItem }">
-            <wwEditorInputRow
-                label="Facet filter"
-                placeholder="Enter a value"
-                type="query"
-                :model-value="item"
-                @update:modelValue="setItem"
-                bindable
-                small
-            />
+            <wwEditorFormRow>
+                <wwEditorInput
+                    label="Facet filter"
+                    placeholder="Enter a value"
+                    type="query"
+                    :model-value="item"
+                    @update:modelValue="setItem"
+                    bindable
+                    small
+                />
+            </wwEditorFormRow>
         </template>
     </wwEditorInputRow>
     <wwEditorInputRow
@@ -137,15 +141,17 @@
         @add-item="setProp('optionalFilters', [...database.optionalFilters, ''])"
     >
         <template #default="{ item, setItem }">
-            <wwEditorInputRow
-                label="Optional filter"
-                placeholder="Enter a value"
-                type="query"
-                :model-value="item"
-                @update:modelValue="setItem"
-                bindable
-                small
-            />
+            <wwEditorFormRow>
+                <wwEditorInput
+                    label="Optional filter"
+                    placeholder="Enter a value"
+                    type="query"
+                    :model-value="item"
+                    @update:modelValue="setItem"
+                    bindable
+                    small
+                />
+            </wwEditorFormRow>
         </template>
     </wwEditorInputRow>
     <wwEditorInputRow
@@ -158,15 +164,17 @@
         @add-item="setProp('numericFilters', [...database.numericFilters, ''])"
     >
         <template #default="{ item, setItem }">
-            <wwEditorInputRow
-                label="Numeric filter"
-                placeholder="Enter a value"
-                type="query"
-                :model-value="item"
-                @update:modelValue="setItem"
-                bindable
-                small
-            />
+            <wwEditorFormRow>
+                <wwEditorInput
+                    label="Numeric filter"
+                    placeholder="Enter a value"
+                    type="query"
+                    :model-value="item"
+                    @update:modelValue="setItem"
+                    bindable
+                    small
+                />
+            </wwEditorFormRow>
         </template>
     </wwEditorInputRow>
     <wwEditorInputRow
@@ -179,15 +187,17 @@
         @add-item="setProp('tagFilters', [...database.tagFilters, ''])"
     >
         <template #default="{ item, setItem }">
-            <wwEditorInputRow
-                label="Tag filter"
-                placeholder="Enter a value"
-                type="query"
-                :model-value="item"
-                @update:modelValue="setItem"
-                bindable
-                small
-            />
+            <wwEditorFormRow>
+                <wwEditorInput
+                    label="Tag filter"
+                    placeholder="Enter a value"
+                    type="query"
+                    :model-value="item"
+                    @update:modelValue="setItem"
+                    bindable
+                    small
+                />
+            </wwEditorFormRow>
         </template>
     </wwEditorInputRow>
     <wwEditorInputRow
@@ -209,15 +219,17 @@
         @add-item="setProp('facets', [...database.facets, ''])"
     >
         <template #default="{ item, setItem }">
-            <wwEditorInputRow
-                label="Facet"
-                placeholder="Enter a value"
-                type="query"
-                :model-value="item"
-                @update:modelValue="setItem"
-                bindable
-                small
-            />
+            <wwEditorFormRow>
+                <wwEditorInput
+                    label="Facet"
+                    placeholder="Enter a value"
+                    type="query"
+                    :model-value="item"
+                    @update:modelValue="setItem"
+                    bindable
+                    small
+                />
+            </wwEditorFormRow>
         </template>
     </wwEditorInputRow>
     <wwEditorFormRow label="Max values per facet" v-if="database.searchParameters.includes('maxValuesPerFacet')">
@@ -271,15 +283,17 @@
         @add-item="setProp('attributesToHighlight', [...database.attributesToHighlight, ''])"
     >
         <template #default="{ item, setItem }">
-            <wwEditorInputRow
-                label="Attribute to highlight"
-                placeholder="Enter a value"
-                type="query"
-                :model-value="item"
-                @update:modelValue="setItem"
-                bindable
-                small
-            />
+            <wwEditorFormRow>
+                <wwEditorInput
+                    label="Attribute to highlight"
+                    placeholder="Enter a value"
+                    type="query"
+                    :model-value="item"
+                    @update:modelValue="setItem"
+                    bindable
+                    small
+                />
+            </wwEditorFormRow>
         </template>
     </wwEditorInputRow>
     <wwEditorInputRow
@@ -292,15 +306,17 @@
         @add-item="setProp('attributesToSnippet', [...database.attributesToSnippet, ''])"
     >
         <template #default="{ item, setItem }">
-            <wwEditorInputRow
-                label="Attribute to snippet"
-                placeholder="Enter a value"
-                type="query"
-                :model-value="item"
-                @update:modelValue="setItem"
-                bindable
-                small
-            />
+            <wwEditorFormRow>
+                <wwEditorInput
+                    label="Attribute to snippet"
+                    placeholder="Enter a value"
+                    type="query"
+                    :model-value="item"
+                    @update:modelValue="setItem"
+                    bindable
+                    small
+                />
+            </wwEditorFormRow>
         </template>
     </wwEditorInputRow>
     <wwEditorInputRow
@@ -428,15 +444,17 @@
         @add-item="setProp('disableTypoToleranceOnAttributes', [...database.disableTypoToleranceOnAttributes, ''])"
     >
         <template #default="{ item, setItem }">
-            <wwEditorInputRow
-                label="Disable typo tolerance on attribute"
-                placeholder="Enter a value"
-                type="query"
-                :model-value="item"
-                @update:modelValue="setItem"
-                bindable
-                small
-            />
+            <wwEditorFormRow>
+                <wwEditorInput
+                    label="Disable typo tolerance on attribute"
+                    placeholder="Enter a value"
+                    type="query"
+                    :model-value="item"
+                    @update:modelValue="setItem"
+                    bindable
+                    small
+                />
+            </wwEditorFormRow>
         </template>
     </wwEditorInputRow>
     <wwEditorInputRow
@@ -540,7 +558,7 @@
                 <wwEditorInputRow
                     label="Point 1 lat"
                     placeholder="Enter a value"
-                    type="query"
+                    type="number"
                     :model-value="item[0]"
                     @update:modelValue="setItem([$event, item[1], item[2], item[3]])"
                     bindable
@@ -549,16 +567,18 @@
                 <wwEditorInputRow
                     label="Point 1 lng"
                     placeholder="Enter a value"
-                    type="query"
+                    type="number"
                     :model-value="item[1]"
                     @update:modelValue="setItem([item[0], $event, item[2], item[3]])"
                     bindable
                     small
                 />
+            </div>
+            <div class="flex items-center">
                 <wwEditorInputRow
                     label="Point 2 lat"
                     placeholder="Enter a value"
-                    type="query"
+                    type="number"
                     :model-value="item[2]"
                     @update:modelValue="setItem([item[0], item[1], $event, item[3]])"
                     bindable
@@ -567,13 +587,44 @@
                 <wwEditorInputRow
                     label="Point 2 lng"
                     placeholder="Enter a value"
-                    type="query"
+                    type="number"
                     :model-value="item[3]"
                     @update:modelValue="setItem([item[0], item[1], item[2], $event])"
                     bindable
                     small
                 />
             </div>
+        </template>
+    </wwEditorInputRow>
+    <wwEditorInputRow
+        v-if="database.searchParameters.includes('insidePolygon')"
+        label="Inside polygon"
+        type="array"
+        :model-value="database.insidePolygon"
+        bindable
+        @update:modelValue="setProp('insidePolygon', $event)"
+        @add-item="setProp('insidePolygon', [...database.insidePolygon, []])"
+    >
+        <template #default="{ index, item, setItem }">
+            <wwEditorInputRow
+                type="array"
+                :model-value="item"
+                bindable
+                @update:modelValue="setItem"
+                @add-item="setItem([...item, []])"
+            >
+                <template #default="{ index: subIndex, item: subItem, setItem: setSubItem }">
+                    <wwEditorInputRow
+                        :label="`Point ${parseInt(subIndex / 2)} ${!(subIndex % 2) ? 'lat' : 'lng'}`"
+                        placeholder="Enter a value"
+                        type="number"
+                        :model-value="subItem"
+                        @update:modelValue="setSubItem($event)"
+                        bindable
+                        small
+                    />
+                </template>
+            </wwEditorInputRow>
         </template>
     </wwEditorInputRow>
     <wwEditorInputRow
@@ -630,7 +681,7 @@ export default {
                 { label: 'Around precision', value: 'aroundPrecision' },
                 { label: 'Minimum around radius', value: 'minimumAroundRadius' },
                 { label: 'Inside bounding box', value: 'insideBoundingBox' },
-                // { label: 'Inside polygon', value: 'insidePolygon' },
+                { label: 'Inside polygon', value: 'insidePolygon' },
                 // { title: 'Languages', label: 'Ignore plurals', value: 'ignorePlurals' },
                 // { label: 'Remove stop words', value: 'removeStopWords' },
                 // { label: 'Query languages', value: 'queryLanguages' },
@@ -715,7 +766,7 @@ export default {
                 aroundPrecision: 10,
                 minimumAroundRadius: 10,
                 insideBoundingBox: [[]],
-                // insidePolygon: [[]],
+                insidePolygon: [[]],
                 // ignorePlurals: true || false || [''],
                 // removeStopWords: true || false || [''],
                 // queryLanguages: [],
