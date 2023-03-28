@@ -877,6 +877,188 @@
         placeholder="Select a value"
         @update:modelValue="setProp('advancedSyntaxFeatures', $event)"
     />
+    <wwEditorFormRow v-if="database.searchParameters.includes('distinct')" label="Distinct">
+        <wwEditorInputRadio
+            :choices="distinctChoices"
+            :model-value="database.distinct"
+            @update:modelValue="setProp('distinct', $event)"
+            bindable
+            small
+        />
+    </wwEditorFormRow>
+    <wwEditorInputRow
+        v-if="database.searchParameters.includes('getRankingInfo')"
+        label="Get ranking info"
+        type="boolean"
+        bindable
+        small
+        :model-value="database.getRankingInfo"
+        @update:modelValue="setProp('getRankingInfo', $event)"
+    />
+    <wwEditorInputRow
+        v-if="database.searchParameters.includes('clickAnalytics')"
+        label="Click analytics"
+        type="boolean"
+        bindable
+        small
+        :model-value="database.clickAnalytics"
+        @update:modelValue="setProp('clickAnalytics', $event)"
+    />
+    <wwEditorInputRow
+        v-if="database.searchParameters.includes('analytics')"
+        label="Analytics"
+        type="boolean"
+        bindable
+        small
+        :model-value="database.analytics"
+        @update:modelValue="setProp('analytics', $event)"
+    />
+    <wwEditorInputRow
+        v-if="database.searchParameters.includes('analyticsTags')"
+        label="Analytics tags"
+        type="array"
+        :model-value="database.analyticsTags"
+        bindable
+        @update:modelValue="setProp('analyticsTags', $event)"
+        @add-item="setProp('analyticsTags', [...database.analyticsTags, ''])"
+    >
+        <template #default="{ item, setItem }">
+            <wwEditorFormRow>
+                <wwEditorInput
+                    label="Analytics tag"
+                    placeholder="Enter a value"
+                    type="query"
+                    :model-value="item"
+                    @update:modelValue="setItem"
+                    bindable
+                    small
+                />
+            </wwEditorFormRow>
+        </template>
+    </wwEditorInputRow>
+    <wwEditorInputRow
+        v-if="database.searchParameters.includes('synonyms')"
+        label="Synonyms"
+        type="boolean"
+        bindable
+        small
+        :model-value="database.synonyms"
+        @update:modelValue="setProp('synonyms', $event)"
+    />
+    <wwEditorInputRow
+        v-if="database.searchParameters.includes('replaceSynonymsInHighlight')"
+        label="Replace synonyms in highlight"
+        type="boolean"
+        bindable
+        small
+        :model-value="database.replaceSynonymsInHighlight"
+        @update:modelValue="setProp('replaceSynonymsInHighlight', $event)"
+    />
+    <wwEditorFormRow label="Min proximity" v-if="database.searchParameters.includes('minProximity')">
+        <div class="flex items-center">
+            <wwEditorInput
+                label="Min proximity"
+                placeholder="Enter a value"
+                type="number"
+                min="1"
+                max="7"
+                :model-value="database.minProximity"
+                @update:modelValue="setProp('minProximity', $event)"
+                bindable
+                small
+            />
+            <wwEditorInputRange
+                v-if="!isBound(database.minProximity)"
+                class="ml-2"
+                min="1"
+                max="7"
+                :model-value="database.minProximity"
+                @update:modelValue="setProp('minProximity', $event)"
+            />
+        </div>
+    </wwEditorFormRow>
+    <wwEditorInputRow
+        v-if="database.searchParameters.includes('responseFields')"
+        label="Response fields"
+        type="array"
+        :model-value="database.responseFields"
+        bindable
+        @update:modelValue="setProp('responseFields', $event)"
+        @add-item="setProp('responseFields', [...database.responseFields, ''])"
+    >
+        <template #default="{ item, setItem }">
+            <wwEditorFormRow>
+                <wwEditorInput
+                    label="Response field"
+                    placeholder="Enter a value"
+                    type="query"
+                    :model-value="item"
+                    @update:modelValue="setItem"
+                    bindable
+                    small
+                />
+            </wwEditorFormRow>
+        </template>
+    </wwEditorInputRow>
+    <wwEditorFormRow label="Max facet hits" v-if="database.searchParameters.includes('maxFacetHits')">
+        <div class="flex items-center">
+            <wwEditorInput
+                label="Max facet hits"
+                placeholder="Enter a value"
+                type="number"
+                min="1"
+                max="100"
+                :model-value="database.maxFacetHits"
+                @update:modelValue="setProp('maxFacetHits', $event)"
+                bindable
+                small
+            />
+            <wwEditorInputRange
+                v-if="!isBound(database.maxFacetHits)"
+                class="ml-2"
+                min="1"
+                max="100"
+                :model-value="database.maxFacetHits"
+                @update:modelValue="setProp('maxFacetHits', $event)"
+            />
+        </div>
+    </wwEditorFormRow>
+    <wwEditorInputRow
+        v-if="database.searchParameters.includes('percentileComputation')"
+        label="Percentile computation"
+        type="boolean"
+        bindable
+        small
+        :model-value="database.percentileComputation"
+        @update:modelValue="setProp('percentileComputation', $event)"
+    />
+    <wwEditorInputRow
+        v-if="database.searchParameters.includes('attributeCriteriaComputedByMinProximity')"
+        label="Attribute criteria computed by min proximity"
+        type="boolean"
+        bindable
+        small
+        :model-value="database.attributeCriteriaComputedByMinProximity"
+        @update:modelValue="setProp('attributeCriteriaComputedByMinProximity', $event)"
+    />
+    <wwEditorInputRow
+        v-if="database.searchParameters.includes('enableABTest')"
+        label="Enable AB test"
+        type="boolean"
+        bindable
+        small
+        :model-value="database.enableABTest"
+        @update:modelValue="setProp('enableABTest', $event)"
+    />
+    <wwEditorInputRow
+        v-if="database.searchParameters.includes('enableReRanking')"
+        label="Enable re-ranking"
+        type="boolean"
+        bindable
+        small
+        :model-value="database.enableReRanking"
+        @update:modelValue="setProp('enableReRanking', $event)"
+    />
     <wwEditorInputRow
         label="Result key"
         type="query"
@@ -950,23 +1132,23 @@ export default {
                 { label: 'Exact on single word query', value: 'exactOnSingleWordQuery' },
                 { label: 'Alternatives as exact', value: 'alternativesAsExact' },
                 { label: 'Advanced syntax features', value: 'advancedSyntaxFeatures' },
-                // { title: 'Advanced', label: 'Distinct', value: 'distinct' },
-                // { label: 'Get ranking info', value: 'getRankingInfo' },
-                // { label: 'Click analytics', value: 'clickAnalytics' },
-                // { label: 'Analytics', value: 'analytics' },
-                // { label: 'Analytics tags', value: 'analyticsTags' },
-                // { label: 'Synonyms', value: 'synonyms' },
-                // { label: 'Replace synonyms in highlight', value: 'replaceSynonymsInHighlight' },
-                // { label: 'Min proximity', value: 'minProximity' },
-                // { label: 'Response fields', value: 'responseFields' },
-                // { label: 'Max facet hits', value: 'maxFacetHits' },
-                // { label: 'Percentile computation', value: 'percentileComputation' },
-                // {
-                //     label: 'Attribute criteria computed by min proximity',
-                //     value: 'attributeCriteriaComputedByMinProximity',
-                // },
-                // { label: 'Enable AB test', value: 'enableABTest' },
-                // { label: 'Enable re-ranking', value: 'enableReRanking' },
+                { title: 'Advanced', label: 'Distinct', value: 'distinct' },
+                { label: 'Get ranking info', value: 'getRankingInfo' },
+                { label: 'Click analytics', value: 'clickAnalytics' },
+                { label: 'Analytics', value: 'analytics' },
+                { label: 'Analytics tags', value: 'analyticsTags' },
+                { label: 'Synonyms', value: 'synonyms' },
+                { label: 'Replace synonyms in highlight', value: 'replaceSynonymsInHighlight' },
+                { label: 'Min proximity', value: 'minProximity' },
+                { label: 'Response fields', value: 'responseFields' },
+                { label: 'Max facet hits', value: 'maxFacetHits' },
+                { label: 'Percentile computation', value: 'percentileComputation' },
+                {
+                    label: 'Attribute criteria computed by min proximity',
+                    value: 'attributeCriteriaComputedByMinProximity',
+                },
+                { label: 'Enable AB test', value: 'enableABTest' },
+                { label: 'Enable re-ranking', value: 'enableReRanking' },
             ],
             typoToleranceChoices: [
                 { label: 'True', value: true },
@@ -993,6 +1175,13 @@ export default {
                 { label: 'Attribute', value: 'attribute' },
                 { label: 'None', value: 'none' },
                 { label: 'Word', value: 'word' },
+            ],
+            distinctChoices: [
+                { label: '0', value: 0 },
+                { label: '1', value: 1 },
+                { label: '2', value: 2 },
+                { label: '3', value: 3 },
+                { label: '4', value: 4 },
             ],
             alternativesAsExactOptions: [
                 { label: 'Ignore plurals', value: 'ignorePlurals' },
@@ -1255,7 +1444,7 @@ export default {
                 index: null,
                 search: null,
                 searchParameters: [],
-                attributesToRetrieve: ['*'],
+                attributesToRetrieve: [],
                 restrictSearchableAttributes: [],
                 relevancyStrictness: 100,
                 filters: '',
@@ -1284,8 +1473,8 @@ export default {
                 aroundRadius: 1000,
                 aroundPrecision: 10,
                 minimumAroundRadius: 10,
-                insideBoundingBox: [[]],
-                insidePolygon: [[]],
+                insideBoundingBox: [],
+                insidePolygon: [],
                 ignorePlurals: [],
                 removeStopWords: [],
                 queryLanguages: [],
@@ -1304,6 +1493,20 @@ export default {
                 exactOnSingleWordQuery: 'attribute',
                 alternativesAsExact: ['ignorePlurals', 'singleWordSynonym'],
                 advancedSyntaxFeatures: ['exactPhrase', 'excludeWords'],
+                distinct: 0,
+                getRankingInfo: false,
+                clickAnalytics: false,
+                analytics: true,
+                analyticsTags: [],
+                synonyms: true,
+                replaceSynonymsInHighlight: false,
+                minProximity: 1,
+                responseFields: [],
+                maxFacetHits: 10,
+                percentileComputation: true,
+                attributeCriteriaComputedByMinProximity: false,
+                enableABTest: true,
+                enableReRanking: true,
                 ...this.config,
             };
         },
