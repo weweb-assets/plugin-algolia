@@ -635,6 +635,137 @@
         </template>
     </wwEditorInputRow>
     <wwEditorInputRow
+        v-if="database.searchParameters.includes('ignorePlurals')"
+        label="Ignore plurals"
+        type="select"
+        multiple
+        bindable
+        small
+        :options="ignorePluralsOptions"
+        :model-value="database.ignorePlurals"
+        placeholder="Select a value"
+        @update:modelValue="setProp('ignorePlurals', $event)"
+    />
+    <wwEditorInputRow
+        v-if="database.searchParameters.includes('removeStopWords')"
+        label="Remove stop words"
+        type="select"
+        multiple
+        bindable
+        small
+        :options="removeStopWordsOptions"
+        :model-value="database.removeStopWords"
+        placeholder="Select a value"
+        @update:modelValue="setProp('removeStopWords', $event)"
+    />
+    <wwEditorInputRow
+        v-if="database.searchParameters.includes('queryLanguages')"
+        label="Query languages"
+        type="select"
+        multiple
+        bindable
+        small
+        :options="queryLanguagesOptions"
+        :model-value="database.queryLanguages"
+        placeholder="Select a value"
+        @update:modelValue="setProp('queryLanguages', $event)"
+    />
+    <wwEditorInputRow
+        v-if="database.searchParameters.includes('naturalLanguages')"
+        label="Natural languages"
+        type="select"
+        multiple
+        bindable
+        small
+        :options="naturalLanguagesOptions"
+        :model-value="database.naturalLanguages"
+        placeholder="Select a value"
+        @update:modelValue="setProp('naturalLanguages', $event)"
+    />
+    <wwEditorInputRow
+        v-if="database.searchParameters.includes('decompoundQuery')"
+        label="Decompound query"
+        type="boolean"
+        bindable
+        small
+        :model-value="database.decompoundQuery"
+        @update:modelValue="setProp('decompoundQuery', $event)"
+    />
+    <wwEditorInputRow
+        v-if="database.searchParameters.includes('enableRules')"
+        label="Enable rules"
+        type="boolean"
+        bindable
+        small
+        :model-value="database.enableRules"
+        @update:modelValue="setProp('enableRules', $event)"
+    />
+    <wwEditorInputRow
+        v-if="database.searchParameters.includes('ruleContexts')"
+        label="Rule contexts"
+        type="array"
+        :model-value="database.ruleContexts"
+        bindable
+        @update:modelValue="setProp('ruleContexts', $event)"
+        @add-item="setProp('ruleContexts', [...database.ruleContexts, ''])"
+    >
+        <template #default="{ item, setItem }">
+            <wwEditorFormRow>
+                <wwEditorInput
+                    label="Rule context"
+                    placeholder="Enter a value"
+                    type="query"
+                    :model-value="item"
+                    @update:modelValue="setItem"
+                    bindable
+                    small
+                />
+            </wwEditorFormRow>
+        </template>
+    </wwEditorInputRow>
+    <wwEditorInputRow
+        v-if="database.searchParameters.includes('enablePersonalization')"
+        label="Enable personalization"
+        type="boolean"
+        bindable
+        small
+        :model-value="database.enablePersonalization"
+        @update:modelValue="setProp('enablePersonalization', $event)"
+    />
+    <wwEditorFormRow label="Personalization Impact" v-if="database.searchParameters.includes('personalizationImpact')">
+        <div class="flex items-center">
+            <wwEditorInput
+                label="Personalization impact"
+                placeholder="Enter a value"
+                type="number"
+                min="0"
+                max="100"
+                :model-value="database.personalizationImpact"
+                @update:modelValue="setProp('personalizationImpact', $event)"
+                bindable
+                small
+            />
+            <wwEditorInputRange
+                v-if="!isBound(database.personalizationImpact)"
+                class="ml-2"
+                min="0"
+                max="100"
+                :model-value="database.personalizationImpact"
+                @update:modelValue="setProp('personalizationImpact', $event)"
+            />
+        </div>
+    </wwEditorFormRow>
+    <wwEditorInputRow
+        v-if="database.searchParameters.includes('userToken')"
+        label="User token"
+        type="query"
+        placeholder="Enter a value"
+        bindable
+        small
+        :model-value="database.userToken"
+        @update:modelValue="setProp('userToken', $event)"
+    />
+    <wwEditorInputRow
         label="Result key"
         type="query"
         :model-value="database.resultKey"
@@ -689,16 +820,16 @@ export default {
                 { label: 'Minimum around radius', value: 'minimumAroundRadius' },
                 { label: 'Inside bounding box', value: 'insideBoundingBox' },
                 { label: 'Inside polygon', value: 'insidePolygon' },
-                // { title: 'Languages', label: 'Ignore plurals', value: 'ignorePlurals' },
-                // { label: 'Remove stop words', value: 'removeStopWords' },
-                // { label: 'Query languages', value: 'queryLanguages' },
-                // { label: 'Natural languages', value: 'naturalLanguages' },
-                // { label: 'Decompound query', value: 'decompoundQuery' },
-                // { title: 'Rules', label: 'Enable rules', value: 'enableRules' },
-                // { label: 'Rule contexts', value: 'ruleContexts' },
-                // { title: 'Personalization', label: 'Enable personalization', value: 'enablePersonalization' },
-                // { label: 'Personalization impact', value: 'personalizationImpact' },
-                // { label: 'User token', value: 'userToken' },
+                { title: 'Languages', label: 'Ignore plurals', value: 'ignorePlurals' },
+                { label: 'Remove stop words', value: 'removeStopWords' },
+                { label: 'Query languages', value: 'queryLanguages' },
+                { label: 'Natural languages', value: 'naturalLanguages' },
+                { label: 'Decompound query', value: 'decompoundQuery' },
+                { title: 'Rules', label: 'Enable rules', value: 'enableRules' },
+                { label: 'Rule contexts', value: 'ruleContexts' },
+                { title: 'Personalization', label: 'Enable personalization', value: 'enablePersonalization' },
+                { label: 'Personalization impact', value: 'personalizationImpact' },
+                { label: 'User token', value: 'userToken' },
                 // { title: 'Query strategy', label: 'Query type', value: 'queryType' },
                 // { label: 'Remove words if no results', value: 'removeWordsIfNoResults' },
                 // { label: 'Advanced syntax', value: 'advancedSyntax' },
@@ -734,6 +865,250 @@ export default {
             sortFacetValuesByChoices: [
                 { label: 'Count', value: 'count' },
                 { label: 'Alpha', value: 'alpha' },
+            ],
+            ignorePluralsOptions: [
+                { label: 'Arabic', value: 'ar' },
+                { label: 'Azerbaijani', value: 'az' },
+                { label: 'Bulgarian', value: 'bg' },
+                { label: 'Catalan', value: 'ca' },
+                { label: 'Czech', value: 'cs' },
+                { label: 'Welsh', value: 'cy' },
+                { label: 'Danish', value: 'da' },
+                { label: 'German', value: 'de' },
+                { label: 'English', value: 'en' },
+                { label: 'Esperanto', value: 'eo' },
+                { label: 'Spanish', value: 'es' },
+                { label: 'Estonian', value: 'et' },
+                { label: 'Basque', value: 'eu' },
+                { label: 'Finnish', value: 'fi' },
+                { label: 'Faroese', value: 'fo' },
+                { label: 'French', value: 'fr' },
+                { label: 'Galician', value: 'gl' },
+                { label: 'Hebrew', value: 'he' },
+                { label: 'Hindi', value: 'hi' },
+                { label: 'Hungarian', value: 'hu' },
+                { label: 'Armenian', value: 'hy' },
+                { label: 'Indonesian', value: 'id' },
+                { label: 'Icelandic', value: 'is' },
+                { label: 'Italian', value: 'it' },
+                { label: 'Japanese', value: 'ja' },
+                { label: 'Georgian', value: 'ka' },
+                { label: 'Kazakh', value: 'kk' },
+                { label: 'Korean', value: 'ko' },
+                { label: 'Kirghiz', value: 'ky' },
+                { label: 'Lithuanian', value: 'lt' },
+                { label: 'Maori', value: 'mi' },
+                { label: 'Mongolian', value: 'mn' },
+                { label: 'Marathi', value: 'mr' },
+                { label: 'Malay', value: 'ms' },
+                { label: 'Maltese', value: 'mt' },
+                { label: 'Norwegian Bokmål', value: 'nb' },
+                { label: 'Dutch', value: 'nl' },
+                { label: 'Norwegian', value: 'no' },
+                { label: 'Northern Sotho', value: 'ns' },
+                { label: 'Polish', value: 'pl' },
+                { label: 'Pashto', value: 'ps' },
+                { label: 'Portuguese', value: 'pt' },
+                { label: 'Quechua', value: 'qu' },
+                { label: 'Romanian', value: 'ro' },
+                { label: 'Russian', value: 'ru' },
+                { label: 'Slovak', value: 'sk' },
+                { label: 'Albanian', value: 'sq' },
+                { label: 'Swedish', value: 'sv' },
+                { label: 'Swahili', value: 'sw' },
+                { label: 'Tamil', value: 'ta' },
+                { label: 'Telugu', value: 'te' },
+                { label: 'Tagalog', value: 'tl' },
+                { label: 'Tswana', value: 'tn' },
+                { label: 'Turkish', value: 'tr' },
+                { label: 'Tatar', value: 'tt' },
+                { label: 'Ukrainian', value: 'uk' },
+                { label: 'Urdu', value: 'ur' },
+                { label: 'Uzbek', value: 'uz' },
+                { label: 'Chinese', value: 'zh' },
+            ],
+            queryLanguagesOptions: [
+                { label: 'Arabic', value: 'ar' },
+                { label: 'Bulgarian', value: 'bg' },
+                { label: 'Bengali', value: 'bn' },
+                { label: 'Catalan', value: 'ca' },
+                { label: 'Czech', value: 'cs' },
+                { label: 'Danish', value: 'da' },
+                { label: 'German', value: 'de' },
+                { label: 'Greek', value: 'el' },
+                { label: 'English', value: 'en' },
+                { label: 'Spanish', value: 'es' },
+                { label: 'Basque', value: 'eu' },
+                { label: 'Persian (Farsi)', value: 'fa' },
+                { label: 'Finnish', value: 'fi' },
+                { label: 'French', value: 'fr' },
+                { label: 'Irish', value: 'ga' },
+                { label: 'Galician', value: 'gl' },
+                { label: 'Hindi', value: 'hi' },
+                { label: 'Hungarian', value: 'hu' },
+                { label: 'Armenian', value: 'hy' },
+                { label: 'Indonesian', value: 'id' },
+                { label: 'Italian', value: 'it' },
+                { label: 'Japanese', value: 'ja' },
+                { label: 'Korean', value: 'ko' },
+                { label: 'Kurdish', value: 'ku' },
+                { label: 'Lithuanian', value: 'lt' },
+                { label: 'Latvian', value: 'lv' },
+                { label: 'Marathi', value: 'mr' },
+                { label: 'Dutch', value: 'nl' },
+                { label: 'Norwegian', value: 'no' },
+                { label: 'Polish', value: 'pl' },
+                { label: 'Portuguese', value: 'pt' },
+                { label: 'Brazilian', value: 'pt-br' },
+                { label: 'Romanian', value: 'ro' },
+                { label: 'Russian', value: 'ru' },
+                { label: 'Slovak', value: 'sk' },
+                { label: 'Swedish', value: 'sv' },
+                { label: 'Thai', value: 'th' },
+                { label: 'Turkish', value: 'tr' },
+                { label: 'Ukranian', value: 'uk' },
+                { label: 'Urdu', value: 'ur' },
+                { label: 'Chinese', value: 'zh' },
+            ],
+            removeStopWordsOptions: [
+                { label: 'Afrikaans', value: 'af' },
+                { label: 'Arabic', value: 'ar' },
+                { label: 'Azeri', value: 'az' },
+                { label: 'Bulgarian', value: 'bg' },
+                { label: 'Bengali', value: 'bn' },
+                { label: 'Catalan', value: 'ca' },
+                { label: 'Czech', value: 'cs' },
+                { label: 'Welsh', value: 'cy' },
+                { label: 'Danish', value: 'da' },
+                { label: 'German', value: 'de' },
+                { label: 'Greek', value: 'el' },
+                { label: 'English', value: 'en' },
+                { label: 'Esperanto', value: 'eo' },
+                { label: 'Spanish', value: 'es' },
+                { label: 'Estonian', value: 'et' },
+                { label: 'Basque', value: 'eu' },
+                { label: 'Persian (Farsi)', value: 'fa' },
+                { label: 'Finnish', value: 'fi' },
+                { label: 'Faroese', value: 'fo' },
+                { label: 'French', value: 'fr' },
+                { label: 'Irish', value: 'ga' },
+                { label: 'Galician', value: 'gl' },
+                { label: 'Hebrew', value: 'he' },
+                { label: 'Hindi', value: 'hi' },
+                { label: 'Hungarian', value: 'hu' },
+                { label: 'Armenian', value: 'hy' },
+                { label: 'Indonesian', value: 'id' },
+                { label: 'Icelandic', value: 'is' },
+                { label: 'Italian', value: 'it' },
+                { label: 'Japanese', value: 'ja' },
+                { label: 'Georgian', value: 'ka' },
+                { label: 'Kazakh', value: 'kk' },
+                { label: 'Korean', value: 'ko' },
+                { label: 'Kurdish', value: 'ku' },
+                { label: 'Kirghiz', value: 'ky' },
+                { label: 'Lithuanian', value: 'lt' },
+                { label: 'Latvian', value: 'lv' },
+                { label: 'Maori', value: 'mi' },
+                { label: 'Mongolian', value: 'mn' },
+                { label: 'Marathi', value: 'mr' },
+                { label: 'Malay', value: 'ms' },
+                { label: 'Maltese', value: 'mt' },
+                { label: 'Norwegian Bokmål', value: 'nb' },
+                { label: 'Dutch', value: 'nl' },
+                { label: 'Norwegian', value: 'no' },
+                { label: 'Northern Sotho', value: 'ns' },
+                { label: 'Polish', value: 'pl' },
+                { label: 'Pashto', value: 'ps' },
+                { label: 'Portuguese', value: 'pt' },
+                { label: 'Brazilian', value: 'pt-br' },
+                { label: 'Quechua', value: 'qu' },
+                { label: 'Romanian', value: 'ro' },
+                { label: 'Russian', value: 'ru' },
+                { label: 'Slovak', value: 'sk' },
+                { label: 'Albanian', value: 'sq' },
+                { label: 'Swedish', value: 'sv' },
+                { label: 'Swahili', value: 'sw' },
+                { label: 'Tamil', value: 'ta' },
+                { label: 'Telugu', value: 'te' },
+                { label: 'Thai', value: 'th' },
+                { label: 'Tagalog', value: 'tl' },
+                { label: 'Tswana', value: 'tn' },
+                { label: 'Turkish', value: 'tr' },
+                { label: 'Tatar', value: 'tt' },
+                { label: 'Ukranian', value: 'uk' },
+                { label: 'Urdu', value: 'ur' },
+                { label: 'Uzbek', value: 'uz' },
+                { label: 'Chinese', value: 'zh' },
+            ],
+            naturalLanguagesOptions: [
+                { label: 'Afrikaans', value: 'af' },
+                { label: 'Arabic', value: 'ar' },
+                { label: 'Azerbaijani', value: 'az' },
+                { label: 'Bulgarian', value: 'bg' },
+                { label: 'Bengali', value: 'bn' },
+                { label: 'Catalan', value: 'ca' },
+                { label: 'Czech', value: 'cs' },
+                { label: 'Welsh', value: 'cy' },
+                { label: 'Danish', value: 'da' },
+                { label: 'German', value: 'de' },
+                { label: 'Greek', value: 'el' },
+                { label: 'English', value: 'en' },
+                { label: 'Esperanto', value: 'eo' },
+                { label: 'Spanish', value: 'es' },
+                { label: 'Estonian', value: 'et' },
+                { label: 'Basque', value: 'eu' },
+                { label: 'Persian (Farsi)', value: 'fa' },
+                { label: 'Finnish', value: 'fi' },
+                { label: 'Faroese', value: 'fo' },
+                { label: 'French', value: 'fr' },
+                { label: 'Irish', value: 'ga' },
+                { label: 'Galician', value: 'gl' },
+                { label: 'Hebrew', value: 'he' },
+                { label: 'Hindi', value: 'hi' },
+                { label: 'Hungarian', value: 'hu' },
+                { label: 'Armenian', value: 'hy' },
+                { label: 'Indonesian', value: 'id' },
+                { label: 'Icelandic', value: 'is' },
+                { label: 'Italian', value: 'it' },
+                { label: 'Japanese', value: 'ja' },
+                { label: 'Georgian', value: 'ka' },
+                { label: 'Kazakh', value: 'kk' },
+                { label: 'Korean', value: 'ko' },
+                { label: 'Kurdish', value: 'ku' },
+                { label: 'Kirghiz', value: 'ky' },
+                { label: 'Lithuanian', value: 'lt' },
+                { label: 'Latvian', value: 'lv' },
+                { label: 'Maori', value: 'mi' },
+                { label: 'Mongolian', value: 'mn' },
+                { label: 'Marathi', value: 'mr' },
+                { label: 'Malay', value: 'ms' },
+                { label: 'Maltese', value: 'mt' },
+                { label: 'Norwegian Bokmål', value: 'nb' },
+                { label: 'Dutch', value: 'nl' },
+                { label: 'Norwegian', value: 'no' },
+                { label: 'Northern Sotho', value: 'ns' },
+                { label: 'Polish', value: 'pl' },
+                { label: 'Pashto', value: 'ps' },
+                { label: 'Portuguese', value: 'pt' },
+                { label: 'Brazilian', value: 'pt-br' },
+                { label: 'Quechua', value: 'qu' },
+                { label: 'Romanian', value: 'ro' },
+                { label: 'Russian', value: 'ru' },
+                { label: 'Slovak', value: 'sk' },
+                { label: 'Albanian', value: 'sq' },
+                { label: 'Swedish', value: 'sv' },
+                { label: 'Swahili', value: 'sw' },
+                { label: 'Tamil', value: 'ta' },
+                { label: 'Telugu', value: 'te' },
+                { label: 'Thai', value: 'th' },
+                { label: 'Tagalog', value: 'tl' },
+                { label: 'Tswana', value: 'tn' },
+                { label: 'Turkish', value: 'tr' },
+                { label: 'Tatar', value: 'tt' },
+                { label: 'Ukranian', value: 'uk' },
+                { label: 'Urdu', value: 'ur' },
+                { label: 'Uzbek', value: 'uz' },
+                { label: 'Chinese', value: 'zh' },
             ],
         };
     },
@@ -774,12 +1149,12 @@ export default {
                 minimumAroundRadius: 10,
                 insideBoundingBox: [[]],
                 insidePolygon: [[]],
-                // ignorePlurals: true || false || [''],
-                // removeStopWords: true || false || [''],
-                // queryLanguages: [],
-                // naturalLanguages: [],
-                // decompoundQuery: true,
-                // enableRules: true,
+                ignorePlurals: [],
+                removeStopWords: [],
+                queryLanguages: [],
+                naturalLanguages: [],
+                decompoundQuery: true,
+                enableRules: true,
                 // ruleContexts: [],
                 // enablePersonalization: false,
                 // personalizationImpact: 100,
