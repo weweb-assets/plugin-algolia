@@ -765,6 +765,118 @@
         :model-value="database.userToken"
         @update:modelValue="setProp('userToken', $event)"
     />
+    <wwEditorFormRow v-if="database.searchParameters.includes('queryType')" label="Query type">
+        <wwEditorInputRadio
+            :choices="queryTypeChoices"
+            :model-value="database.queryType"
+            @update:modelValue="setProp('queryType', $event)"
+            bindable
+            small
+        />
+    </wwEditorFormRow>
+    <wwEditorFormRow
+        v-if="database.searchParameters.includes('removeWordsIfNoResults')"
+        label="Remove words if no results"
+    >
+        <wwEditorInputRadio
+            :choices="removeWordsIfNoResultsChoices"
+            :model-value="database.removeWordsIfNoResults"
+            @update:modelValue="setProp('removeWordsIfNoResults', $event)"
+            bindable
+            small
+        />
+    </wwEditorFormRow>
+    <wwEditorInputRow
+        v-if="database.searchParameters.includes('advancedSyntax')"
+        label="Advanced syntax"
+        type="boolean"
+        bindable
+        small
+        :model-value="database.advancedSyntax"
+        @update:modelValue="setProp('advancedSyntax', $event)"
+    />
+    <wwEditorInputRow
+        v-if="database.searchParameters.includes('optionalWords')"
+        label="Optional words"
+        type="array"
+        :model-value="database.optionalWords"
+        bindable
+        @update:modelValue="setProp('optionalWords', $event)"
+        @add-item="setProp('optionalWords', [...database.optionalWords, ''])"
+    >
+        <template #default="{ item, setItem }">
+            <wwEditorFormRow>
+                <wwEditorInput
+                    label="Optional word"
+                    placeholder="Enter a value"
+                    type="query"
+                    :model-value="item"
+                    @update:modelValue="setItem"
+                    bindable
+                    small
+                />
+            </wwEditorFormRow>
+        </template>
+    </wwEditorInputRow>
+    <wwEditorInputRow
+        v-if="database.searchParameters.includes('disableExactOnAttributes')"
+        label="Disable exact on attributes"
+        type="array"
+        :model-value="database.disableExactOnAttributes"
+        bindable
+        @update:modelValue="setProp('disableExactOnAttributes', $event)"
+        @add-item="setProp('disableExactOnAttributes', [...database.disableExactOnAttributes, ''])"
+    >
+        <template #default="{ item, setItem }">
+            <wwEditorFormRow>
+                <wwEditorInput
+                    label="Disable exact on attribute"
+                    placeholder="Enter a value"
+                    type="query"
+                    :model-value="item"
+                    @update:modelValue="setItem"
+                    bindable
+                    small
+                />
+            </wwEditorFormRow>
+        </template>
+    </wwEditorInputRow>
+    <wwEditorFormRow
+        v-if="database.searchParameters.includes('exactOnSingleWordQuery')"
+        label="Exact on single word query"
+    >
+        <wwEditorInputRadio
+            :choices="exactOnSingleWordQueryChoices"
+            :model-value="database.exactOnSingleWordQuery"
+            @update:modelValue="setProp('exactOnSingleWordQuery', $event)"
+            bindable
+            small
+        />
+    </wwEditorFormRow>
+    <wwEditorInputRow
+        v-if="database.searchParameters.includes('alternativesAsExact')"
+        label="Alternatives as exact"
+        type="select"
+        multiple
+        bindable
+        small
+        :options="alternativesAsExactOptions"
+        :model-value="database.alternativesAsExact"
+        placeholder="Select a value"
+        @update:modelValue="setProp('alternativesAsExact', $event)"
+    />
+    <wwEditorInputRow
+        v-if="database.searchParameters.includes('advancedSyntaxFeatures')"
+        label="Advanced syntax features"
+        type="select"
+        multiple
+        bindable
+        small
+        :options="advancedSyntaxFeaturesOptions"
+        :model-value="database.advancedSyntaxFeatures"
+        placeholder="Select a value"
+        @update:modelValue="setProp('advancedSyntaxFeatures', $event)"
+    />
     <wwEditorInputRow
         label="Result key"
         type="query"
@@ -830,14 +942,14 @@ export default {
                 { title: 'Personalization', label: 'Enable personalization', value: 'enablePersonalization' },
                 { label: 'Personalization impact', value: 'personalizationImpact' },
                 { label: 'User token', value: 'userToken' },
-                // { title: 'Query strategy', label: 'Query type', value: 'queryType' },
-                // { label: 'Remove words if no results', value: 'removeWordsIfNoResults' },
-                // { label: 'Advanced syntax', value: 'advancedSyntax' },
-                // { label: 'Optional words', value: 'optionalWords' },
-                // { label: 'Disable exact on attributes', value: 'disableExactOnAttributes' },
-                // { label: 'Exact on single word query', value: 'exactOnSingleWordQuery' },
-                // { label: 'Alternatives as exact', value: 'alternativesAsExact' },
-                // { label: 'Advanced syntax features', value: 'advancedSyntaxFeatures' },
+                { title: 'Query strategy', label: 'Query type', value: 'queryType' },
+                { label: 'Remove words if no results', value: 'removeWordsIfNoResults' },
+                { label: 'Advanced syntax', value: 'advancedSyntax' },
+                { label: 'Optional words', value: 'optionalWords' },
+                { label: 'Disable exact on attributes', value: 'disableExactOnAttributes' },
+                { label: 'Exact on single word query', value: 'exactOnSingleWordQuery' },
+                { label: 'Alternatives as exact', value: 'alternativesAsExact' },
+                { label: 'Advanced syntax features', value: 'advancedSyntaxFeatures' },
                 // { title: 'Advanced', label: 'Distinct', value: 'distinct' },
                 // { label: 'Get ranking info', value: 'getRankingInfo' },
                 // { label: 'Click analytics', value: 'clickAnalytics' },
@@ -865,6 +977,31 @@ export default {
             sortFacetValuesByChoices: [
                 { label: 'Count', value: 'count' },
                 { label: 'Alpha', value: 'alpha' },
+            ],
+            queryTypeChoices: [
+                { label: 'Prefix last', value: 'prefixLast' },
+                { label: 'Prefix all', value: 'prefixAll' },
+                { label: 'Prefix none', value: 'prefixNone' },
+            ],
+            removeWordsIfNoResultsChoices: [
+                { label: 'None', value: 'none' },
+                { label: 'Last words', value: 'lastWords' },
+                { label: 'First words', value: 'firstWords' },
+                { label: 'All optional', value: 'allOptional' },
+            ],
+            exactOnSingleWordQueryChoices: [
+                { label: 'Attribute', value: 'attribute' },
+                { label: 'None', value: 'none' },
+                { label: 'Word', value: 'word' },
+            ],
+            alternativesAsExactOptions: [
+                { label: 'Ignore plurals', value: 'ignorePlurals' },
+                { label: 'Single word synonym', value: 'singleWordSynonym' },
+                { label: 'Multi words synonym', value: 'multiWordsSynonym' },
+            ],
+            advancedSyntaxFeaturesOptions: [
+                { label: 'Exact phrase', value: 'exactPhrase' },
+                { label: 'Exclude words', value: 'excludeWords' },
             ],
             ignorePluralsOptions: [
                 { label: 'Arabic', value: 'ar' },
@@ -1155,18 +1292,18 @@ export default {
                 naturalLanguages: [],
                 decompoundQuery: true,
                 enableRules: true,
-                // ruleContexts: [],
-                // enablePersonalization: false,
-                // personalizationImpact: 100,
-                // userToken: null,
-                // queryType: 'prefixLast',
-                // removeWordsIfNoResults: 'none',
-                // advancedSyntax: false,
-                // optionalWords: [],
-                // disableExactOnAttributes: [],
-                // exactOnSingleWordQuery: 'attribute',
-                // alternativesAsExact: ['ignorePlurals', 'singleWordSynonym'],
-                // advancedSyntaxFeatures: ['exactPhrase', 'excludeWords'],
+                ruleContexts: [],
+                enablePersonalization: false,
+                personalizationImpact: 100,
+                userToken: null,
+                queryType: 'prefixLast',
+                removeWordsIfNoResults: 'none',
+                advancedSyntax: false,
+                optionalWords: [],
+                disableExactOnAttributes: [],
+                exactOnSingleWordQuery: 'attribute',
+                alternativesAsExact: ['ignorePlurals', 'singleWordSynonym'],
+                advancedSyntaxFeatures: ['exactPhrase', 'excludeWords'],
                 ...this.config,
             };
         },
