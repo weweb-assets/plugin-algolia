@@ -41,7 +41,8 @@
         @add-item="setProp('attributesToRetrieve', [...database.attributesToRetrieve, ''])"
     >
         <template #default="{ item, setItem }">
-            <wwEditorInputRow
+            <wwEditorInput
+                label="Attribute to retrieve"
                 placeholder="Enter a value"
                 type="query"
                 :model-value="item"
@@ -61,7 +62,8 @@
         @add-item="setProp('restrictSearchableAttributes', [...database.restrictSearchableAttributes, ''])"
     >
         <template #default="{ item, setItem }">
-            <wwEditorInputRow
+            <wwEditorInput
+                label="Restrict searchable attribute"
                 placeholder="Enter a value"
                 type="query"
                 :model-value="item"
@@ -113,7 +115,8 @@
         @add-item="setProp('facetFilters', [...database.facetFilters, ''])"
     >
         <template #default="{ item, setItem }">
-            <wwEditorInputRow
+            <wwEditorInput
+                label="Facet filter"
                 placeholder="Enter a value"
                 type="query"
                 :model-value="item"
@@ -133,7 +136,8 @@
         @add-item="setProp('optionalFilters', [...database.optionalFilters, ''])"
     >
         <template #default="{ item, setItem }">
-            <wwEditorInputRow
+            <wwEditorInput
+                label="Optional filter"
                 placeholder="Enter a value"
                 type="query"
                 :model-value="item"
@@ -154,6 +158,7 @@
     >
         <template #default="{ item, setItem }">
             <wwEditorInputRow
+                label="Numeric filter"
                 placeholder="Enter a value"
                 type="query"
                 :model-value="item"
@@ -173,7 +178,8 @@
         @add-item="setProp('tagFilters', [...database.tagFilters, ''])"
     >
         <template #default="{ item, setItem }">
-            <wwEditorInputRow
+            <wwEditorInput
+                label="Tag filter"
                 placeholder="Enter a value"
                 type="query"
                 :model-value="item"
@@ -202,7 +208,8 @@
         @add-item="setProp('facets', [...database.facets, ''])"
     >
         <template #default="{ item, setItem }">
-            <wwEditorInputRow
+            <wwEditorInput
+                label="Facet"
                 placeholder="Enter a value"
                 type="query"
                 :model-value="item"
@@ -243,16 +250,15 @@
         :model-value="database.facetingAfterDistinct"
         @update:modelValue="setProp('facetingAfterDistinct', $event)"
     />
-    <wwEditorInputRow
-        v-if="database.searchParameters.includes('sortFacetValuesBy')"
-        label="Sort facet values by"
-        type="query"
-        placeholder="Enter a value"
-        bindable
-        small
-        :model-value="database.sortFacetValuesBy"
-        @update:modelValue="setProp('sortFacetValuesBy', $event)"
-    />
+    <wwEditorFormRow v-if="database.searchParameters.includes('sortFacetValuesBy')" label="Sort facet values by">
+        <wwEditorInputRadio
+            :choices="sortFacetValuesByChoices"
+            :model-value="database.sortFacetValuesBy"
+            @update:modelValue="setProp('sortFacetValuesBy', $event)"
+            bindable
+            small
+        />
+    </wwEditorFormRow>
     <wwEditorInputRow
         v-if="database.searchParameters.includes('attributesToHighlight')"
         label="Attributes to highlight"
@@ -263,7 +269,8 @@
         @add-item="setProp('attributesToHighlight', [...database.attributesToHighlight, ''])"
     >
         <template #default="{ item, setItem }">
-            <wwEditorInputRow
+            <wwEditorInput
+                label="Attribute to highlight"
                 placeholder="Enter a value"
                 type="query"
                 :model-value="item"
@@ -283,7 +290,8 @@
         @add-item="setProp('attributesToSnippet', [...database.attributesToSnippet, ''])"
     >
         <template #default="{ item, setItem }">
-            <wwEditorInputRow
+            <wwEditorInput
+                label="Attribute to snippet"
                 placeholder="Enter a value"
                 type="query"
                 :model-value="item"
@@ -469,59 +477,63 @@ export default {
                 { label: 'Highlight post tag', value: 'highlightPostTag' },
                 { label: 'Snippet ellipsis text', value: 'snippetEllipsisText' },
                 { label: 'Restrict highlight and snippet arrays', value: 'restrictHighlightAndSnippetArrays' },
-                { title: 'Typos', label: 'Min word size for 1 typo', value: 'minWordSizefor1Typo' },
-                { label: 'Min word size for 2 typos', value: 'minWordSizefor2Typos' },
-                { label: 'Typo tolerance', value: 'typoTolerance' },
-                { label: 'Allow typos on numeric tokens', value: 'allowTyposOnNumericTokens' },
-                { label: 'Disable typo tolerance on attributes', value: 'disableTypoToleranceOnAttributes' },
-                { title: 'Geo search', label: 'Around lat lng', value: 'aroundLatLng' },
-                { label: 'Around lat lng via IP', value: 'aroundLatLngViaIP' },
-                { label: 'Around radius', value: 'aroundRadius' },
-                { label: 'Around precision', value: 'aroundPrecision' },
-                { label: 'Minimum around radius', value: 'minimumAroundRadius' },
-                { label: 'Inside bounding box', value: 'insideBoundingBox' },
-                { label: 'Inside polygon', value: 'insidePolygon' },
-                { title: 'Languages', label: 'Ignore plurals', value: 'ignorePlurals' },
-                { label: 'Remove stop words', value: 'removeStopWords' },
-                { label: 'Query languages', value: 'queryLanguages' },
-                { label: 'Natural languages', value: 'naturalLanguages' },
-                { label: 'Decompound query', value: 'decompoundQuery' },
-                { title: 'Rules', label: 'Enable rules', value: 'enableRules' },
-                { label: 'Rule contexts', value: 'ruleContexts' },
-                { title: 'Personalization', label: 'Enable personalization', value: 'enablePersonalization' },
-                { label: 'Personalization impact', value: 'personalizationImpact' },
-                { label: 'User token', value: 'userToken' },
-                { title: 'Query strategy', label: 'Query type', value: 'queryType' },
-                { label: 'Remove words if no results', value: 'removeWordsIfNoResults' },
-                { label: 'Advanced syntax', value: 'advancedSyntax' },
-                { label: 'Optional words', value: 'optionalWords' },
-                { label: 'Disable exact on attributes', value: 'disableExactOnAttributes' },
-                { label: 'Exact on single word query', value: 'exactOnSingleWordQuery' },
-                { label: 'Alternatives as exact', value: 'alternativesAsExact' },
-                { label: 'Advanced syntax features', value: 'advancedSyntaxFeatures' },
-                { title: 'Advanced', label: 'Distinct', value: 'distinct' },
-                { label: 'Get ranking info', value: 'getRankingInfo' },
-                { label: 'Click analytics', value: 'clickAnalytics' },
-                { label: 'Analytics', value: 'analytics' },
-                { label: 'Analytics tags', value: 'analyticsTags' },
-                { label: 'Synonyms', value: 'synonyms' },
-                { label: 'Replace synonyms in highlight', value: 'replaceSynonymsInHighlight' },
-                { label: 'Min proximity', value: 'minProximity' },
-                { label: 'Response fields', value: 'responseFields' },
-                { label: 'Max facet hits', value: 'maxFacetHits' },
-                { label: 'Percentile computation', value: 'percentileComputation' },
-                {
-                    label: 'Attribute criteria computed by min proximity',
-                    value: 'attributeCriteriaComputedByMinProximity',
-                },
-                { label: 'Enable AB test', value: 'enableABTest' },
-                { label: 'Enable re-ranking', value: 'enableReRanking' },
+                // { title: 'Typos', label: 'Min word size for 1 typo', value: 'minWordSizefor1Typo' },
+                // { label: 'Min word size for 2 typos', value: 'minWordSizefor2Typos' },
+                // { label: 'Typo tolerance', value: 'typoTolerance' },
+                // { label: 'Allow typos on numeric tokens', value: 'allowTyposOnNumericTokens' },
+                // { label: 'Disable typo tolerance on attributes', value: 'disableTypoToleranceOnAttributes' },
+                // { title: 'Geo search', label: 'Around lat lng', value: 'aroundLatLng' },
+                // { label: 'Around lat lng via IP', value: 'aroundLatLngViaIP' },
+                // { label: 'Around radius', value: 'aroundRadius' },
+                // { label: 'Around precision', value: 'aroundPrecision' },
+                // { label: 'Minimum around radius', value: 'minimumAroundRadius' },
+                // { label: 'Inside bounding box', value: 'insideBoundingBox' },
+                // { label: 'Inside polygon', value: 'insidePolygon' },
+                // { title: 'Languages', label: 'Ignore plurals', value: 'ignorePlurals' },
+                // { label: 'Remove stop words', value: 'removeStopWords' },
+                // { label: 'Query languages', value: 'queryLanguages' },
+                // { label: 'Natural languages', value: 'naturalLanguages' },
+                // { label: 'Decompound query', value: 'decompoundQuery' },
+                // { title: 'Rules', label: 'Enable rules', value: 'enableRules' },
+                // { label: 'Rule contexts', value: 'ruleContexts' },
+                // { title: 'Personalization', label: 'Enable personalization', value: 'enablePersonalization' },
+                // { label: 'Personalization impact', value: 'personalizationImpact' },
+                // { label: 'User token', value: 'userToken' },
+                // { title: 'Query strategy', label: 'Query type', value: 'queryType' },
+                // { label: 'Remove words if no results', value: 'removeWordsIfNoResults' },
+                // { label: 'Advanced syntax', value: 'advancedSyntax' },
+                // { label: 'Optional words', value: 'optionalWords' },
+                // { label: 'Disable exact on attributes', value: 'disableExactOnAttributes' },
+                // { label: 'Exact on single word query', value: 'exactOnSingleWordQuery' },
+                // { label: 'Alternatives as exact', value: 'alternativesAsExact' },
+                // { label: 'Advanced syntax features', value: 'advancedSyntaxFeatures' },
+                // { title: 'Advanced', label: 'Distinct', value: 'distinct' },
+                // { label: 'Get ranking info', value: 'getRankingInfo' },
+                // { label: 'Click analytics', value: 'clickAnalytics' },
+                // { label: 'Analytics', value: 'analytics' },
+                // { label: 'Analytics tags', value: 'analyticsTags' },
+                // { label: 'Synonyms', value: 'synonyms' },
+                // { label: 'Replace synonyms in highlight', value: 'replaceSynonymsInHighlight' },
+                // { label: 'Min proximity', value: 'minProximity' },
+                // { label: 'Response fields', value: 'responseFields' },
+                // { label: 'Max facet hits', value: 'maxFacetHits' },
+                // { label: 'Percentile computation', value: 'percentileComputation' },
+                // {
+                //     label: 'Attribute criteria computed by min proximity',
+                //     value: 'attributeCriteriaComputedByMinProximity',
+                // },
+                // { label: 'Enable AB test', value: 'enableABTest' },
+                // { label: 'Enable re-ranking', value: 'enableReRanking' },
             ],
             typoToleranceChoices: [
                 { label: 'True', value: true },
                 { label: 'False', value: false },
                 { label: 'min', value: 'min' },
                 { label: 'strict', value: 'strict' },
+            ],
+            sortFacetValuesByChoices: [
+                { label: 'Count', value: 'count' },
+                { label: 'Alpha', value: 'alpha' },
             ],
         };
     },
@@ -531,7 +543,7 @@ export default {
                 index: null,
                 search: null,
                 searchParameters: [],
-                attributesToRetrieve: [],
+                attributesToRetrieve: ['*'],
                 restrictSearchableAttributes: [],
                 relevancyStrictness: 100,
                 filters: '',
@@ -543,18 +555,43 @@ export default {
                 facets: [],
                 maxValuesPerFacet: 100,
                 facetingAfterDistinct: false,
-                sortFacetValuesBy: '',
+                sortFacetValuesBy: 'count',
                 attributesToHighlight: [],
                 attributesToSnippet: [],
-                highlightPreTag: '',
-                highlightPostTag: '',
+                highlightPreTag: '<em>',
+                highlightPostTag: '</em>',
                 snippetEllipsisText: '...',
                 restrictHighlightAndSnippetArrays: false,
-                minWordSizefor1Typo: 4,
-                minWordSizefor2Typos: 8,
-                typoTolerance: true,
-                allowTyposOnNumericTokens: true,
-                disableTypoToleranceOnAttributes: [],
+                // minWordSizefor1Typo: 4,
+                // minWordSizefor2Typos: 8,
+                // typoTolerance: true,
+                // allowTyposOnNumericTokens: true,
+                // disableTypoToleranceOnAttributes: [],
+                // aroundLatLng: '',
+                // aroundLatLngViaIP: false,
+                // aroundRadius: null,
+                // aroundPrecision: 10,
+                // minimumAroundRadius: null,
+                // insideBoundingBox: [[]],
+                // insidePolygon: [[]],
+                // ignorePlurals: true || false || [''],
+                // removeStopWords: true || false || [''],
+                // queryLanguages: [],
+                // naturalLanguages: [],
+                // decompoundQuery: true,
+                // enableRules: true,
+                // ruleContexts: [],
+                // enablePersonalization: false,
+                // personalizationImpact: 100,
+                // userToken: null,
+                // queryType: 'prefixLast',
+                // removeWordsIfNoResults: 'none',
+                // advancedSyntax: false,
+                // optionalWords: [],
+                // disableExactOnAttributes: [],
+                // exactOnSingleWordQuery: 'attribute',
+                // alternativesAsExact: ['ignorePlurals', 'singleWordSynonym'],
+                // advancedSyntaxFeatures: ['exactPhrase', 'excludeWords'],
                 ...this.config,
             };
         },

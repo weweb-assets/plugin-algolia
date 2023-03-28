@@ -28,9 +28,14 @@ export default {
         if (collection.mode === 'dynamic') {
             try {
                 const index = this.client.initIndex(collection.config.index);
+                const searchParameters = (collection.config.searchParameters || []).reduce((obj, item) => {
+                    obj[item] = collection.config[item];
+                    return obj;
+                }, {});
                 const data = await index.search(collection.config.search, {
                     offset: collection.offset || 0,
                     length: collection.limit || 20,
+                    ...searchParameters,
                 });
                 return { data: _.get(data, collection.config.resultKey, data), total: data.nbHits };
             } catch (err) {
