@@ -41,7 +41,7 @@
         @add-item="setProp('attributesToRetrieve', [...database.attributesToRetrieve, ''])"
     >
         <template #default="{ item, setItem }">
-            <wwEditorInput
+            <wwEditorInputRow
                 label="Attribute to retrieve"
                 placeholder="Enter a value"
                 type="query"
@@ -62,7 +62,7 @@
         @add-item="setProp('restrictSearchableAttributes', [...database.restrictSearchableAttributes, ''])"
     >
         <template #default="{ item, setItem }">
-            <wwEditorInput
+            <wwEditorInputRow
                 label="Restrict searchable attribute"
                 placeholder="Enter a value"
                 type="query"
@@ -76,7 +76,8 @@
     <wwEditorFormRow label="Relevancy strictness" v-if="database.searchParameters.includes('relevancyStrictness')">
         <div class="flex items-center">
             <wwEditorInput
-                label="Enter a value"
+                label="Relevancy strictness"
+                placeholder="Enter a value"
                 type="number"
                 min="0"
                 max="100"
@@ -115,7 +116,7 @@
         @add-item="setProp('facetFilters', [...database.facetFilters, ''])"
     >
         <template #default="{ item, setItem }">
-            <wwEditorInput
+            <wwEditorInputRow
                 label="Facet filter"
                 placeholder="Enter a value"
                 type="query"
@@ -136,7 +137,7 @@
         @add-item="setProp('optionalFilters', [...database.optionalFilters, ''])"
     >
         <template #default="{ item, setItem }">
-            <wwEditorInput
+            <wwEditorInputRow
                 label="Optional filter"
                 placeholder="Enter a value"
                 type="query"
@@ -178,7 +179,7 @@
         @add-item="setProp('tagFilters', [...database.tagFilters, ''])"
     >
         <template #default="{ item, setItem }">
-            <wwEditorInput
+            <wwEditorInputRow
                 label="Tag filter"
                 placeholder="Enter a value"
                 type="query"
@@ -208,7 +209,7 @@
         @add-item="setProp('facets', [...database.facets, ''])"
     >
         <template #default="{ item, setItem }">
-            <wwEditorInput
+            <wwEditorInputRow
                 label="Facet"
                 placeholder="Enter a value"
                 type="query"
@@ -222,7 +223,8 @@
     <wwEditorFormRow label="Max values per facet" v-if="database.searchParameters.includes('maxValuesPerFacet')">
         <div class="flex items-center">
             <wwEditorInput
-                label="Enter a value"
+                label="Max values per facet"
+                placeholder="Enter a value"
                 type="number"
                 min="1"
                 max="1000"
@@ -269,7 +271,7 @@
         @add-item="setProp('attributesToHighlight', [...database.attributesToHighlight, ''])"
     >
         <template #default="{ item, setItem }">
-            <wwEditorInput
+            <wwEditorInputRow
                 label="Attribute to highlight"
                 placeholder="Enter a value"
                 type="query"
@@ -290,7 +292,7 @@
         @add-item="setProp('attributesToSnippet', [...database.attributesToSnippet, ''])"
     >
         <template #default="{ item, setItem }">
-            <wwEditorInput
+            <wwEditorInputRow
                 label="Attribute to snippet"
                 placeholder="Enter a value"
                 type="query"
@@ -352,7 +354,8 @@
     <wwEditorFormRow label="Min word size for 1 typo" v-if="database.searchParameters.includes('minWordSizefor1Typo')">
         <div class="flex items-center">
             <wwEditorInput
-                label="Enter a value"
+                label="Min word size for 1 typo"
+                placeholder="Enter a value"
                 type="number"
                 min="1"
                 max="100"
@@ -377,7 +380,8 @@
     >
         <div class="flex items-center">
             <wwEditorInput
-                label="Enter a value"
+                label="Min word size for 2 typos"
+                placeholder="Enter a value"
                 type="number"
                 min="1"
                 max="100"
@@ -425,6 +429,7 @@
     >
         <template #default="{ item, setItem }">
             <wwEditorInputRow
+                label="Disable typo tolerance on attribute"
                 placeholder="Enter a value"
                 type="query"
                 :model-value="item"
@@ -432,6 +437,143 @@
                 bindable
                 small
             />
+        </template>
+    </wwEditorInputRow>
+    <wwEditorInputRow
+        v-if="database.searchParameters.includes('aroundLatLng')"
+        label="Around lat lng"
+        type="query"
+        :model-value="database.aroundLatLng"
+        placeholder="latitude, longitude"
+        small
+        @update:modelValue="setProp('aroundLatLng', $event)"
+    />
+    <wwEditorInputRow
+        v-if="database.searchParameters.includes('aroundLatLngViaIP')"
+        label="Around lat lng via IP"
+        type="boolean"
+        bindable
+        small
+        :model-value="database.aroundLatLngViaIP"
+        @update:modelValue="setProp('aroundLatLngViaIP', $event)"
+    />
+    <wwEditorFormRow label="Around radius" v-if="database.searchParameters.includes('aroundRadius')">
+        <div class="flex items-center">
+            <wwEditorInput
+                label="Around radius"
+                placeholder="Enter a value in meters"
+                type="number"
+                min="1"
+                max="100000"
+                :model-value="database.aroundRadius"
+                @update:modelValue="setProp('aroundRadius', $event)"
+                bindable
+                small
+            />
+            <wwEditorInputRange
+                v-if="!isBound(database.aroundRadius)"
+                class="ml-2"
+                min="1"
+                max="100000"
+                :model-value="database.aroundRadius"
+                @update:modelValue="setProp('aroundRadius', $event)"
+            />
+        </div>
+    </wwEditorFormRow>
+    <wwEditorFormRow label="Around precision" v-if="database.searchParameters.includes('aroundPrecision')">
+        <div class="flex items-center">
+            <wwEditorInput
+                label="Around precision"
+                placeholder="Enter a value in meters"
+                type="number"
+                min="1"
+                max="1000"
+                :model-value="database.aroundPrecision"
+                @update:modelValue="setProp('aroundPrecision', $event)"
+                bindable
+                small
+            />
+            <wwEditorInputRange
+                v-if="!isBound(database.aroundPrecision)"
+                class="ml-2"
+                min="1"
+                max="1000"
+                :model-value="database.aroundPrecision"
+                @update:modelValue="setProp('aroundPrecision', $event)"
+            />
+        </div>
+    </wwEditorFormRow>
+    <wwEditorFormRow label="Minimum around radius" v-if="database.searchParameters.includes('minimumAroundRadius')">
+        <div class="flex items-center">
+            <wwEditorInput
+                label="Minimum around radius"
+                placeholder="Enter a value in meters"
+                type="number"
+                min="1"
+                max="10000"
+                :model-value="database.minimumAroundRadius"
+                @update:modelValue="setProp('minimumAroundRadius', $event)"
+                bindable
+                small
+            />
+            <wwEditorInputRange
+                v-if="!isBound(database.minimumAroundRadius)"
+                class="ml-2"
+                min="1"
+                max="10000"
+                :model-value="database.minimumAroundRadius"
+                @update:modelValue="setProp('minimumAroundRadius', $event)"
+            />
+        </div>
+    </wwEditorFormRow>
+    <wwEditorInputRow
+        v-if="database.searchParameters.includes('insideBoundingBox')"
+        label="Inside bounding box"
+        type="array"
+        :model-value="database.insideBoundingBox"
+        bindable
+        @update:modelValue="setProp('insideBoundingBox', $event)"
+        @add-item="setProp('insideBoundingBox', [...database.insideBoundingBox, []])"
+    >
+        <template #default="{ item, setItem }">
+            <div class="flex items-center">
+                <wwEditorInputRow
+                    label="Point 1 lat"
+                    placeholder="Enter a value"
+                    type="query"
+                    :model-value="item[0]"
+                    @update:modelValue="setItem([$event, item[1], item[2], item[3]])"
+                    bindable
+                    small
+                />
+                <wwEditorInputRow
+                    label="Point 1 lng"
+                    placeholder="Enter a value"
+                    type="query"
+                    :model-value="item[1]"
+                    @update:modelValue="setItem([item[0], $event, item[2], item[3]])"
+                    bindable
+                    small
+                />
+                <wwEditorInputRow
+                    label="Point 2 lat"
+                    placeholder="Enter a value"
+                    type="query"
+                    :model-value="item[2]"
+                    @update:modelValue="setItem([item[0], item[1], $event, item[3]])"
+                    bindable
+                    small
+                />
+                <wwEditorInputRow
+                    label="Point 2 lng"
+                    placeholder="Enter a value"
+                    type="query"
+                    :model-value="item[3]"
+                    @update:modelValue="setItem([item[0], item[1], item[2], $event])"
+                    bindable
+                    small
+                />
+            </div>
         </template>
     </wwEditorInputRow>
     <wwEditorInputRow
@@ -477,17 +619,17 @@ export default {
                 { label: 'Highlight post tag', value: 'highlightPostTag' },
                 { label: 'Snippet ellipsis text', value: 'snippetEllipsisText' },
                 { label: 'Restrict highlight and snippet arrays', value: 'restrictHighlightAndSnippetArrays' },
-                // { title: 'Typos', label: 'Min word size for 1 typo', value: 'minWordSizefor1Typo' },
-                // { label: 'Min word size for 2 typos', value: 'minWordSizefor2Typos' },
-                // { label: 'Typo tolerance', value: 'typoTolerance' },
-                // { label: 'Allow typos on numeric tokens', value: 'allowTyposOnNumericTokens' },
-                // { label: 'Disable typo tolerance on attributes', value: 'disableTypoToleranceOnAttributes' },
-                // { title: 'Geo search', label: 'Around lat lng', value: 'aroundLatLng' },
-                // { label: 'Around lat lng via IP', value: 'aroundLatLngViaIP' },
-                // { label: 'Around radius', value: 'aroundRadius' },
-                // { label: 'Around precision', value: 'aroundPrecision' },
-                // { label: 'Minimum around radius', value: 'minimumAroundRadius' },
-                // { label: 'Inside bounding box', value: 'insideBoundingBox' },
+                { title: 'Typos', label: 'Min word size for 1 typo', value: 'minWordSizefor1Typo' },
+                { label: 'Min word size for 2 typos', value: 'minWordSizefor2Typos' },
+                { label: 'Typo tolerance', value: 'typoTolerance' },
+                { label: 'Allow typos on numeric tokens', value: 'allowTyposOnNumericTokens' },
+                { label: 'Disable typo tolerance on attributes', value: 'disableTypoToleranceOnAttributes' },
+                { title: 'Geo search', label: 'Around lat lng', value: 'aroundLatLng' },
+                { label: 'Around lat lng via IP', value: 'aroundLatLngViaIP' },
+                { label: 'Around radius', value: 'aroundRadius' },
+                { label: 'Around precision', value: 'aroundPrecision' },
+                { label: 'Minimum around radius', value: 'minimumAroundRadius' },
+                { label: 'Inside bounding box', value: 'insideBoundingBox' },
                 // { label: 'Inside polygon', value: 'insidePolygon' },
                 // { title: 'Languages', label: 'Ignore plurals', value: 'ignorePlurals' },
                 // { label: 'Remove stop words', value: 'removeStopWords' },
@@ -562,17 +704,17 @@ export default {
                 highlightPostTag: '</em>',
                 snippetEllipsisText: '...',
                 restrictHighlightAndSnippetArrays: false,
-                // minWordSizefor1Typo: 4,
-                // minWordSizefor2Typos: 8,
-                // typoTolerance: true,
-                // allowTyposOnNumericTokens: true,
-                // disableTypoToleranceOnAttributes: [],
-                // aroundLatLng: '',
-                // aroundLatLngViaIP: false,
-                // aroundRadius: null,
-                // aroundPrecision: 10,
-                // minimumAroundRadius: null,
-                // insideBoundingBox: [[]],
+                minWordSizefor1Typo: 4,
+                minWordSizefor2Typos: 8,
+                typoTolerance: true,
+                allowTyposOnNumericTokens: true,
+                disableTypoToleranceOnAttributes: [],
+                aroundLatLng: '',
+                aroundLatLngViaIP: false,
+                aroundRadius: 1000,
+                aroundPrecision: 10,
+                minimumAroundRadius: 10,
+                insideBoundingBox: [[]],
                 // insidePolygon: [[]],
                 // ignorePlurals: true || false || [''],
                 // removeStopWords: true || false || [''],
