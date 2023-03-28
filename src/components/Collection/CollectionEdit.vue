@@ -64,15 +64,17 @@
         @add-item="setProp('restrictSearchableAttributes', [...database.restrictSearchableAttributes, ''])"
     >
         <template #default="{ item, setItem }">
-            <wwEditorInputRow
-                label="Restrict searchable attribute"
-                placeholder="Enter a value"
-                type="query"
-                :model-value="item"
-                @update:modelValue="setItem"
-                bindable
-                small
-            />
+            <wwEditorFormRow>
+                <wwEditorInput
+                    label="Restrict searchable attribute"
+                    placeholder="Enter a value"
+                    type="query"
+                    :model-value="item"
+                    @update:modelValue="setItem"
+                    bindable
+                    small
+                />
+            </wwEditorFormRow>
         </template>
     </wwEditorInputRow>
     <wwEditorFormRow label="Relevancy strictness" v-if="database.searchParameters.includes('relevancyStrictness')">
@@ -554,8 +556,9 @@
         @add-item="setProp('insideBoundingBox', [...database.insideBoundingBox, []])"
     >
         <template #default="{ item, setItem }">
-            <div class="flex items-center">
+            <div class="flex items-center w-100">
                 <wwEditorInputRow
+                    class="w-100"
                     label="Point 1 lat"
                     placeholder="Enter a value"
                     type="number"
@@ -565,6 +568,7 @@
                     small
                 />
                 <wwEditorInputRow
+                    class="w-100"
                     label="Point 1 lng"
                     placeholder="Enter a value"
                     type="number"
@@ -574,8 +578,9 @@
                     small
                 />
             </div>
-            <div class="flex items-center">
+            <div class="flex items-center w-100">
                 <wwEditorInputRow
+                    class="w-100"
                     label="Point 2 lat"
                     placeholder="Enter a value"
                     type="number"
@@ -585,6 +590,7 @@
                     small
                 />
                 <wwEditorInputRow
+                    class="w-100"
                     label="Point 2 lng"
                     placeholder="Enter a value"
                     type="number"
@@ -608,14 +614,15 @@
         <template #default="{ index, item, setItem }">
             <wwEditorInputRow
                 type="array"
+                :label="`Polygon ${index + 1}`"
                 :model-value="item"
                 bindable
                 @update:modelValue="setItem"
-                @add-item="setItem([...item, []])"
+                @add-item="setItem([...item, null])"
             >
                 <template #default="{ index: subIndex, item: subItem, setItem: setSubItem }">
                     <wwEditorInputRow
-                        :label="`Point ${parseInt(subIndex / 2)} ${!(subIndex % 2) ? 'lat' : 'lng'}`"
+                        :label="`Point ${parseInt(subIndex / 2) + 1} ${!(subIndex % 2) ? 'lat' : 'lng'}`"
                         placeholder="Enter a value"
                         type="number"
                         :model-value="subItem"
