@@ -32,11 +32,16 @@ export default {
                     obj[item] = collection.config[item];
                     return obj;
                 }, {});
-                const data = await index.search(collection.config.search, {
-                    offset: collection.offset || 0,
-                    length: collection.limit || 20,
-                    ...searchParameters,
-                });
+                if (
+                    !searchParameters.page &&
+                    !searchParameters.hitsPerPage &&
+                    !searchParameters.offset &&
+                    !searchParameters.length
+                ) {
+                    searchParameters.offset = collection.offset || 0;
+                    searchParameters.length = collection.limit || 20;
+                }
+                const data = await index.search(collection.config.search, searchParameters);
                 return { data: _.get(data, collection.config.resultKey, data), total: data.nbHits };
             } catch (err) {
                 return {
