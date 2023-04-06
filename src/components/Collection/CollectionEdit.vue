@@ -360,15 +360,98 @@
         :model-value="database.restrictHighlightAndSnippetArrays"
         @update:modelValue="setProp('restrictHighlightAndSnippetArrays', $event)"
     />
-    <wwEditorInputRow
-        v-if="database.searchParameters.includes('restrictHighlightAndSnippetArrays')"
-        label="Restrict highlight and snippet arrays"
-        type="boolean"
-        bindable
-        small
-        :model-value="database.restrictHighlightAndSnippetArrays"
-        @update:modelValue="setProp('restrictHighlightAndSnippetArrays', $event)"
-    />
+    <wwEditorFormRow label="Page" v-if="database.searchParameters.includes('page')">
+        <div class="flex items-center">
+            <wwEditorInput
+                label="Page"
+                placeholder="Enter a value"
+                type="number"
+                min="0"
+                max="100"
+                :model-value="database.page"
+                @update:modelValue="setProp('page', $event)"
+                bindable
+                small
+            />
+            <wwEditorInputRange
+                v-if="!isBound(database.page)"
+                class="ml-2"
+                min="0"
+                max="100"
+                :model-value="database.page"
+                @update:modelValue="setProp('page', $event)"
+            />
+        </div>
+    </wwEditorFormRow>
+    <wwEditorFormRow label="Hits per page" v-if="database.searchParameters.includes('hitsPerPage')">
+        <div class="flex items-center">
+            <wwEditorInput
+                label="Hits per page"
+                placeholder="Enter a value"
+                type="number"
+                min="1"
+                max="100"
+                :model-value="database.hitsPerPage"
+                @update:modelValue="setProp('hitsPerPage', $event)"
+                bindable
+                small
+            />
+            <wwEditorInputRange
+                v-if="!isBound(database.hitsPerPage)"
+                class="ml-2"
+                min="1"
+                max="100"
+                :model-value="database.hitsPerPage"
+                @update:modelValue="setProp('hitsPerPage', $event)"
+            />
+        </div>
+    </wwEditorFormRow>
+    <wwEditorFormRow label="Offset" v-if="database.searchParameters.includes('offset')">
+        <div class="flex items-center">
+            <wwEditorInput
+                label="Offset"
+                placeholder="Enter a value"
+                type="number"
+                min="0"
+                max="100"
+                :model-value="database.offset"
+                @update:modelValue="setProp('offset', $event)"
+                bindable
+                small
+            />
+            <wwEditorInputRange
+                v-if="!isBound(database.offset)"
+                class="ml-2"
+                min="0"
+                max="100"
+                :model-value="database.offset"
+                @update:modelValue="setProp('offset', $event)"
+            />
+        </div>
+    </wwEditorFormRow>
+    <wwEditorFormRow label="Length" v-if="database.searchParameters.includes('length')">
+        <div class="flex items-center">
+            <wwEditorInput
+                label="Length"
+                placeholder="Enter a value"
+                type="number"
+                min="1"
+                max="100"
+                :model-value="database.length"
+                @update:modelValue="setProp('length', $event)"
+                bindable
+                small
+            />
+            <wwEditorInputRange
+                v-if="!isBound(database.length)"
+                class="ml-2"
+                min="1"
+                max="100"
+                :model-value="database.length"
+                @update:modelValue="setProp('length', $event)"
+            />
+        </div>
+    </wwEditorFormRow>
     <wwEditorFormRow label="Min word size for 1 typo" v-if="database.searchParameters.includes('minWordSizefor1Typo')">
         <div class="flex items-center">
             <wwEditorInput
@@ -1102,6 +1185,10 @@ export default {
                 { label: 'Highlight post tag', value: 'highlightPostTag' },
                 { label: 'Snippet ellipsis text', value: 'snippetEllipsisText' },
                 { label: 'Restrict highlight and snippet arrays', value: 'restrictHighlightAndSnippetArrays' },
+                { title: 'Pagination', label: 'Page', value: 'page' },
+                { label: 'Hits per page', value: 'hitsPerPage' },
+                { label: 'Offset', value: 'offset' },
+                { label: 'Length', value: 'length' },
                 { title: 'Typos', label: 'Min word size for 1 typo', value: 'minWordSizefor1Typo' },
                 { label: 'Min word size for 2 typos', value: 'minWordSizefor2Typos' },
                 { label: 'Typo tolerance', value: 'typoTolerance' },
@@ -1463,7 +1550,10 @@ export default {
                 highlightPostTag: '</em>',
                 snippetEllipsisText: '...',
                 restrictHighlightAndSnippetArrays: false,
-                minWordSizefor1Typo: 4,
+                page: 0,
+                hitsPerPage: 20,
+                offset: 0,
+                length: 20,
                 minWordSizefor2Typos: 8,
                 typoTolerance: true,
                 allowTyposOnNumericTokens: true,
