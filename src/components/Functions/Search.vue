@@ -1,8 +1,7 @@
 <template>
-    <div class="flex items-center">
-        <div class="w-100 -full">
-            <wwEditorInputRow
-                label="Index"
+    <wwEditorFormRow label="Index" required class="-full">
+        <div class="flex items-center">
+            <wwEditorInput
                 type="select"
                 placeholder="Select an index"
                 required
@@ -10,9 +9,11 @@
                 :options="indexesOptions"
                 @update:modelValue="setIndex"
             />
+            <button type="button" class="ww-editor-button -primary -small -icon m-left" @click="fetchIndexes">
+                <wwEditorIcon name="refresh" medium />
+            </button>
         </div>
-        <button type="button" class="ww-editor-button -small -primary ml-2 mt-3" @click="fetchIndexes">refresh</button>
-    </div>
+    </wwEditorFormRow>
     <wwEditorInputRow
         label="Search"
         type="query"
