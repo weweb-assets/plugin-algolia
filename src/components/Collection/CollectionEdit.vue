@@ -1,8 +1,8 @@
 <template>
     <wwEditorFormRow label="Index" required class="-full">
         <div class="flex items-center">
-            <wwEditorInput
-                type="select"
+            <wwEditorInputTextSelect
+                class="w-100"
                 placeholder="Select an index"
                 required
                 :model-value="database.index"
