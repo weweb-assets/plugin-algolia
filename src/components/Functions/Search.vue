@@ -1,5 +1,5 @@
 <template>
-    <wwEditorFormRow label="Index" required class="-full">
+    <wwEditorFormRow label="Index" required>
         <div class="flex items-center">
             <wwEditorInputTextSelect
                 class="w-100"
