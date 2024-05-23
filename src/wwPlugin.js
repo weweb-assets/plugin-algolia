@@ -13,7 +13,7 @@ export default {
     /*=============================================m_ÔÔ_m=============================================\
         Plugin API
     \================================================================================================*/
-    async onLoad(settings) {
+    async _onLoad(settings) {
         /* wwFront:start */
         await this.load(settings.publicData.applicationId, settings.publicData.apiKey);
         /* wwFront:end */
@@ -24,7 +24,7 @@ export default {
     /*=============================================m_ÔÔ_m=============================================\
         Collection API
     \================================================================================================*/
-    async fetchCollection(collection) {
+    async _fetchCollection(collection) {
         if (collection.mode === 'dynamic') {
             try {
                 const index = this.client.initIndex(collection.config.index);
