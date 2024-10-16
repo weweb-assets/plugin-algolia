@@ -38,7 +38,7 @@
         type="array"
         :model-value="database.attributesToRetrieve"
         bindable
-        @update:modelValue="setProp('attributesToRetrieve', $event)"
+        @update:modelValue="setProp('attributesToRetrieve', $event || [])"
         @add-item="setProp('attributesToRetrieve', [...database.attributesToRetrieve, ''])"
     >
         <template #default="{ item, setItem }">
@@ -61,7 +61,7 @@
         type="array"
         :model-value="database.restrictSearchableAttributes"
         bindable
-        @update:modelValue="setProp('restrictSearchableAttributes', $event)"
+        @update:modelValue="setProp('restrictSearchableAttributes', $event || [])"
         @add-item="setProp('restrictSearchableAttributes', [...database.restrictSearchableAttributes, ''])"
     >
         <template #default="{ item, setItem }">
@@ -117,7 +117,7 @@
         type="array"
         :model-value="database.facetFilters"
         bindable
-        @update:modelValue="setProp('facetFilters', $event)"
+        @update:modelValue="setProp('facetFilters', $event || [])"
         @add-item="setProp('facetFilters', [...database.facetFilters, ''])"
     >
         <template #default="{ item, setItem }">
@@ -140,7 +140,7 @@
         type="array"
         :model-value="database.optionalFilters"
         bindable
-        @update:modelValue="setProp('optionalFilters', $event)"
+        @update:modelValue="setProp('optionalFilters', $event || [])"
         @add-item="setProp('optionalFilters', [...database.optionalFilters, ''])"
     >
         <template #default="{ item, setItem }">
@@ -163,7 +163,7 @@
         type="array"
         :model-value="database.numericFilters"
         bindable
-        @update:modelValue="setProp('numericFilters', $event)"
+        @update:modelValue="setProp('numericFilters', $event || [])"
         @add-item="setProp('numericFilters', [...database.numericFilters, ''])"
     >
         <template #default="{ item, setItem }">
@@ -186,7 +186,7 @@
         type="array"
         :model-value="database.tagFilters"
         bindable
-        @update:modelValue="setProp('tagFilters', $event)"
+        @update:modelValue="setProp('tagFilters', $event || [])"
         @add-item="setProp('tagFilters', [...database.tagFilters, ''])"
     >
         <template #default="{ item, setItem }">
@@ -218,7 +218,7 @@
         type="array"
         :model-value="database.facets"
         bindable
-        @update:modelValue="setProp('facets', $event)"
+        @update:modelValue="setProp('facets', $event || [])"
         @add-item="setProp('facets', [...database.facets, ''])"
     >
         <template #default="{ item, setItem }">
@@ -282,7 +282,7 @@
         type="array"
         :model-value="database.attributesToHighlight"
         bindable
-        @update:modelValue="setProp('attributesToHighlight', $event)"
+        @update:modelValue="setProp('attributesToHighlight', $event || [])"
         @add-item="setProp('attributesToHighlight', [...database.attributesToHighlight, ''])"
     >
         <template #default="{ item, setItem }">
@@ -305,7 +305,7 @@
         type="array"
         :model-value="database.attributesToSnippet"
         bindable
-        @update:modelValue="setProp('attributesToSnippet', $event)"
+        @update:modelValue="setProp('attributesToSnippet', $event || [])"
         @add-item="setProp('attributesToSnippet', [...database.attributesToSnippet, ''])"
     >
         <template #default="{ item, setItem }">
@@ -526,7 +526,7 @@
         type="array"
         :model-value="database.disableTypoToleranceOnAttributes"
         bindable
-        @update:modelValue="setProp('disableTypoToleranceOnAttributes', $event)"
+        @update:modelValue="setProp('disableTypoToleranceOnAttributes', $event || [])"
         @add-item="setProp('disableTypoToleranceOnAttributes', [...database.disableTypoToleranceOnAttributes, ''])"
     >
         <template #default="{ item, setItem }">
@@ -636,7 +636,7 @@
         type="array"
         :model-value="database.insideBoundingBox"
         bindable
-        @update:modelValue="setProp('insideBoundingBox', $event)"
+        @update:modelValue="setProp('insideBoundingBox', $event || [])"
         @add-item="setProp('insideBoundingBox', [...database.insideBoundingBox, []])"
     >
         <template #default="{ item, setItem }">
@@ -692,7 +692,7 @@
         type="array"
         :model-value="database.insidePolygon"
         bindable
-        @update:modelValue="setProp('insidePolygon', $event)"
+        @update:modelValue="setProp('insidePolygon', $event || [])"
         @add-item="setProp('insidePolygon', [...database.insidePolygon, []])"
     >
         <template #default="{ index, item, setItem }">
@@ -790,7 +790,7 @@
         type="array"
         :model-value="database.ruleContexts"
         bindable
-        @update:modelValue="setProp('ruleContexts', $event)"
+        @update:modelValue="setProp('ruleContexts', $event || [])"
         @add-item="setProp('ruleContexts', [...database.ruleContexts, ''])"
     >
         <template #default="{ item, setItem }">
@@ -885,7 +885,7 @@
         type="array"
         :model-value="database.optionalWords"
         bindable
-        @update:modelValue="setProp('optionalWords', $event)"
+        @update:modelValue="setProp('optionalWords', $event || [])"
         @add-item="setProp('optionalWords', [...database.optionalWords, ''])"
     >
         <template #default="{ item, setItem }">
@@ -908,7 +908,7 @@
         type="array"
         :model-value="database.disableExactOnAttributes"
         bindable
-        @update:modelValue="setProp('disableExactOnAttributes', $event)"
+        @update:modelValue="setProp('disableExactOnAttributes', $event || [])"
         @add-item="setProp('disableExactOnAttributes', [...database.disableExactOnAttributes, ''])"
     >
         <template #default="{ item, setItem }">
@@ -1003,7 +1003,7 @@
         type="array"
         :model-value="database.analyticsTags"
         bindable
-        @update:modelValue="setProp('analyticsTags', $event)"
+        @update:modelValue="setProp('analyticsTags', $event || [])"
         @add-item="setProp('analyticsTags', [...database.analyticsTags, ''])"
     >
         <template #default="{ item, setItem }">
@@ -1067,7 +1067,7 @@
         type="array"
         :model-value="database.responseFields"
         bindable
-        @update:modelValue="setProp('responseFields', $event)"
+        @update:modelValue="setProp('responseFields', $event || [])"
         @add-item="setProp('responseFields', [...database.responseFields, ''])"
     >
         <template #default="{ item, setItem }">
