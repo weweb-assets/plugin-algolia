@@ -42,6 +42,32 @@ export default {
             getIsValid({ index, search }) {
                 return !!index && !!search;
             },
+            copilot: {
+                description: 'Search through an Algolia index',
+                returns: 'object',
+                schema: {
+                    index: {
+                        type: 'string',
+                        description: 'The name of the Algolia index to search in',
+                        bindable: true
+                    },
+                    search: {
+                        type: 'string',
+                        description: 'The search query to execute',
+                        bindable: true
+                    },
+                    page: {
+                        type: 'number',
+                        description: 'The page number to retrieve (starting from 0)',
+                        bindable: true
+                    },
+                    limit: {
+                        type: 'number',
+                        description: 'The number of results per page',
+                        bindable: true
+                    }
+                }
+            },
             /* wwEditor:end */
         },
     ],
