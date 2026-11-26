@@ -19,7 +19,7 @@ export default {
         /* wwFront:end */
         /* wwEditor:start */
         if (wwLib.editor?.isolatedCanvas) {
-            await this.load(settings.publicData.applicationId, settings.publicData.apiKey);
+            await this.onPreviewSettingsChanged(settings.publicData);
         } else {
             // Projects on the previous editor build still use its Vue configuration forms.
             await this.load(settings.publicData.applicationId, settings.privateData.apiKey);
@@ -81,6 +81,10 @@ export default {
         return await index.search(search, { page: page || 0, hitsPerPage: limit || 20 });
     },
     /* wwEditor:start */
+    async onPreviewSettingsChanged({ applicationId, apiKey }) {
+        this.client = null;
+        if (applicationId && apiKey) await this.load(applicationId, apiKey);
+    },
     async fetchIndexes() {
         if (!this.client) throw new Error('Invalid Algolia configuration.');
         const { items } = await this.client.listIndices();
