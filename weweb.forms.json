@@ -60,6 +60,7 @@
                 "type": "choice",
                 "choices": [
                     {
+                        "title": "Attributes",
                         "label": "Attributes to retrieve",
                         "value": "attributesToRetrieve"
                     },
@@ -68,10 +69,12 @@
                         "value": "restrictSearchableAttributes"
                     },
                     {
+                        "title": "Ranking",
                         "label": "Relevancy strictness",
                         "value": "relevancyStrictness"
                     },
                     {
+                        "title": "Filtering",
                         "label": "Filters",
                         "value": "filters"
                     },
@@ -96,6 +99,7 @@
                         "value": "sumOrFiltersScores"
                     },
                     {
+                        "title": "Faceting",
                         "label": "Facets",
                         "value": "facets"
                     },
@@ -112,6 +116,7 @@
                         "value": "sortFacetValuesBy"
                     },
                     {
+                        "title": "Highlighting snippeting",
                         "label": "Attributes to highlight",
                         "value": "attributesToHighlight"
                     },
@@ -136,6 +141,7 @@
                         "value": "restrictHighlightAndSnippetArrays"
                     },
                     {
+                        "title": "Pagination",
                         "label": "Page",
                         "value": "page"
                     },
@@ -152,6 +158,7 @@
                         "value": "length"
                     },
                     {
+                        "title": "Typos",
                         "label": "Min word size for 1 typo",
                         "value": "minWordSizefor1Typo"
                     },
@@ -172,6 +179,7 @@
                         "value": "disableTypoToleranceOnAttributes"
                     },
                     {
+                        "title": "Geo search",
                         "label": "Around lat lng",
                         "value": "aroundLatLng"
                     },
@@ -200,6 +208,7 @@
                         "value": "insidePolygon"
                     },
                     {
+                        "title": "Languages",
                         "label": "Ignore plurals",
                         "value": "ignorePlurals"
                     },
@@ -220,6 +229,7 @@
                         "value": "decompoundQuery"
                     },
                     {
+                        "title": "Rules",
                         "label": "Enable rules",
                         "value": "enableRules"
                     },
@@ -228,6 +238,7 @@
                         "value": "ruleContexts"
                     },
                     {
+                        "title": "Personalization",
                         "label": "Enable personalization",
                         "value": "enablePersonalization"
                     },
@@ -240,6 +251,7 @@
                         "value": "userToken"
                     },
                     {
+                        "title": "Query strategy",
                         "label": "Query type",
                         "value": "queryType"
                     },
@@ -272,6 +284,7 @@
                         "value": "advancedSyntaxFeatures"
                     },
                     {
+                        "title": "Advanced",
                         "label": "Distinct",
                         "value": "distinct"
                     },
